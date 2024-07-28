@@ -1,0 +1,247 @@
+@mixin laptop {
+    @media screen and (max-width: 1600px) {
+        @content;
+    }
+}
+
+@mixin pad {
+    @media screen and (max-width: 1200px) {
+        @content;
+    }
+}
+@mixin chromebook {
+    @media screen and (max-width: 900px) {
+        @content;
+    }
+}
+@mixin tablet {
+    @media screen and (max-width: 768px) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media screen and (max-width: 600px) {
+        @content;
+    }
+}
+
+.homepage {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .welcome-section {
+        width: 100%;
+        height: 90vh;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: url('../../assets/images/bg_1.jpg') no-repeat center center fixed ;
+        background-size: cover;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+           
+        }
+
+        .welcome-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        
+            @include tablet {
+              width: 100%;
+            }
+        
+            h1 {
+              color: var(--green);
+              font-size: 3rem;
+              font-weight: 700;
+        
+              @include tablet {
+                font-size: 2rem;
+                font-weight: 700;
+              }
+            }
+        
+            button {
+              border: none;
+              padding: 15px 30px;
+              background-color: var(--green);
+              border-radius: 5px;
+              color: var(--white);
+              font-weight: bold;
+        
+              &:hover {
+                background-color: transparent;
+                border: 1px solid var(--green);
+                color: var(--green);
+                overflow: hidden;
+              }
+            }
+          }
+    }
+
+    .services-section {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        background: rgb(248, 249, 253);
+        padding-bottom: 70px;
+
+        @include tablet{
+            flex-direction: column;
+            
+        }
+
+        .view-all-services-button{
+            width: 100px;
+            height: 50px;
+            align-self: center;
+            color:var(--green);
+            background-color: white;
+            border: none;
+            border-radius: 5px;
+
+            @include tablet{
+                margin-top: 50px;
+            }
+
+            &:hover {
+                background-color: var(--green);
+                color: white;
+                transition: all 0.3s ease;
+            }
+        }
+
+        
+
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            //whats the shprthand for adding padding for left and right and leave top and bottom as 0]
+            padding: 0 30px;
+            gap: 50px;
+
+            @include pad {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 70px;
+            }
+
+            @include mobile {
+                grid-template-columns: 1fr;
+            }
+
+            .service-card {
+                background: #fff;
+                color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                text-align: center;
+                position: relative;
+                height: 300px;
+
+                &.highlight {
+                    background-color: var(--green);
+                    color: white;
+                }
+
+                &:hover {
+                    background-color: var(--green);
+                    color: white;
+                    transition: all 0.3s ease;
+                }
+
+                .icon-container {
+                    background-color: #e9f7ef;
+                    border-radius: 50%;
+                    padding: 20px;
+                    margin: -60px auto 20px;
+                    width: 80px;
+                    height: 80px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    img {
+                        max-width: 50px;
+                        max-height: 50px;
+                    }
+                }
+
+                h3 {
+                    margin: 20px 0;
+                    font-size: 1.5rem;
+                    color: #333;
+
+                    &.highlight {
+                        color: white;
+                    }
+                }
+
+                p {
+                    font-size: 1rem;
+                    color: #666;
+                    margin-bottom: 20px;
+
+                    &.highlight {
+                        color: white;
+                    }
+                }
+
+                .learn-more {
+                    position: absolute;
+                    bottom: -10%;
+                    left: 40%;
+                    transition: transform 0.3s ease;
+                   
+                    &:hover {
+                        transform: translateX(10px);
+                      }
+
+
+
+                    img{
+                        background-color: #fff;
+                        color: #fff;
+                       
+                        height: 50px;
+                        width: 50px;
+                        border-radius: 50%;
+                        display: flex;
+                        justify-content: center;
+                        transition: background-color 0.3s ease;
+
+                        &:hover {
+                            background-color: #218838;
+                        }
+
+                        span {
+                            display: block;
+                            font-size: 1.5rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .why-choose-us-section {
+        width: 100%;
+        padding: 50px 0;
+    }
+
+
+
+}

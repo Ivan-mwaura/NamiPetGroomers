@@ -1,0 +1,104 @@
+@mixin laptop {
+    @media screen and (max-width: 1600px) {
+        @content;
+    }
+}
+
+@mixin pad {
+    @media screen and (max-width: 1200px) {
+        @content;
+    }
+}
+@mixin chromebook {
+    @media screen and (max-width: 900px) {
+        @content;
+    }
+}
+@mixin tablet {
+    @media screen and (max-width: 768px) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media screen and (max-width: 600px) {
+        @content;
+    }
+}
+
+
+.petshop {
+    text-align: center;
+    padding: 20px;
+
+    @include tablet{
+        padding-left: 10px;
+    }
+
+  
+    h1 {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+  
+    h2 {
+      margin-bottom: 20px;
+    }
+  
+    .pet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 70px;
+      justify-items: space-between;
+        cursor: pointer;
+
+        @include tablet{
+            grid-area: 20px;
+        }
+  
+      .pet-item {
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        text-align: center;
+        transition: transform 0.3s;
+        height: 270px;
+
+        p{
+            align-items: center;
+        }
+
+        @include pad {
+            height: 400px;
+        }
+
+        @include mobile {
+            height: 100%;
+        }
+  
+        &:hover {
+          transform: translateY(-5px);
+        }
+  
+        .pet-image {
+          width: 100%;
+          height: auto;
+          img {
+            width: 100%;
+            height: auto;
+            display: block;
+          }
+        }
+  
+        p {
+          margin: 10px 0;
+          font-size: 16px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  

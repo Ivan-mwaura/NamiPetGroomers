@@ -1,0 +1,34 @@
+.Events {
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 0;
+
+    & .EventsContainer {
+        width: 100%;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        & .EventsTop {
+            width: 100%;
+            height: 10%;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: .5rem 1rem;
+
+            & .Filter {
+                flex-direction: row;
+                gap: 1rem;
+            }
+        }
+
+        & .EventsBottom {
+            width: 100%;
+            height: 90%;
+        }
+    }
+}

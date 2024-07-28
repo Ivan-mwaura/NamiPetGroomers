@@ -1,0 +1,19 @@
+{
+    "builds": [
+      {
+        "src": "src/**/*.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "src/**/*.jsx",
+        "use": "@vercel/node"
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/(.*)",
+        "destination": "/"
+      }
+    ]
+  }
+  

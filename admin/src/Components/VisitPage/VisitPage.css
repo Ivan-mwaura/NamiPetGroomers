@@ -1,0 +1,25 @@
+.VisitPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    box-shadow: var(--boxShadow);
+    padding: 1rem;
+
+    & h3 {
+        font-weight: 600;
+    }
+}
+
+.VisitPage p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.BarChartContainer {
+    width: 100%;
+}

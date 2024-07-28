@@ -1,0 +1,86 @@
+.Dashboard {
+    height: 100vh;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: auto;
+
+
+    & .Header {
+        justify-content: flex-start;
+        align-items: center;
+        gap: .5rem;
+
+    }
+}
+
+.DashBottom {
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: auto;
+    padding: 1rem 0;
+    gap: 1rem;
+
+}
+
+.DashboardLeft {
+    width: 70%;
+    height: 100%;
+    justify-content: flex-start;
+    box-shadow: var(--boxShadow);
+}
+
+.DashboardRight {
+    width: 30%;
+    height: 100%;
+    gap: .5rem;
+    box-shadow: var(--boxShadow);
+}
+
+.DashCards {
+    width: 100%;
+    height: 23%;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
+
+.Stats {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Table {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    align-items: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+
+.Stats {
+    width: 100%;
+    height: auto;
+    background: var(--paper);
+}
+
+.Visits {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 60% auto;
+    grid-gap: 1rem;
+}
+
+.VisitPages {
+    width: 100%;
+    height: 60%;
+    display: grid;
+    grid-template-columns: 30% auto;
+    grid-gap: 1rem;
+}

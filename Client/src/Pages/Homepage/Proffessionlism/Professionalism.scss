@@ -1,0 +1,128 @@
+@mixin laptop {
+    @media screen and (max-width: 1600px) {
+        @content;
+    }
+}
+
+@mixin pad {
+    @media screen and (max-width: 1200px) {
+        @content;
+    }
+}
+@mixin chromebook {
+    @media screen and (max-width: 900px) {
+        @content;
+    }
+}
+@mixin tablet {
+    @media screen and (max-width: 768px) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media screen and (max-width: 600px) {
+        @content;
+    }
+}
+
+
+.professionalism{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    background-color: var(--green);
+    color: white;
+    margin-bottom:0;
+
+
+    @include tablet{
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    .customer{
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h1{
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        p{
+            font-size: 1.2rem;         
+            font-family: "Montserrat", Arial, sans-serif;
+        }
+
+    }
+    .professionals{
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+
+        h1{
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        p{
+            font-size: 1.2rem;         
+            font-family: "Montserrat", Arial, sans-serif;
+        }
+
+    }
+    .products{
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h1{
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        p{
+            font-size: 1.2rem;         
+            font-family: "Montserrat", Arial, sans-serif;
+        }
+
+
+    }
+    .pets-hosted{
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h1{
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        p{
+            font-size: 1.2rem;         
+            font-family: "Montserrat", Arial, sans-serif;
+        }
+
+
+    }
+
+    .customer, .professionals, .products, .pets-hosted {
+        text-align: center;
+      }
+      
+      .customer h1, .professionals h1, .products h1, .pets-hosted h1 {
+        margin-bottom: 5px; /* Reduce the margin between h1 and p */
+      }
+      
+      .customer p, .professionals p, .products p, .pets-hosted p {
+        margin-top: 0;
+      }
+}

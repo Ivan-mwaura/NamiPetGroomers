@@ -1,0 +1,188 @@
+@mixin laptop {
+    @media screen and (max-width: 1600px) {
+        @content;
+    }
+}
+
+@mixin pad {
+    @media screen and (max-width: 1200px) {
+        @content;
+    }
+}
+@mixin chromebook {
+    @media screen and (max-width: 900px) {
+        @content;
+    }
+}
+@mixin tablet {
+    @media screen and (max-width: 768px) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media screen and (max-width: 600px) {
+        @content;
+    }
+}
+
+.services{
+    color: gray;
+
+
+    .services-header {
+        background-color: linear-gradient(to right, #67b26f, #4ca2cd);
+        height:50vh;
+        background: url('../../assets/images/bg_2.jpg') no-repeat center center fixed;
+        filter: brightness(90%);
+        background-size: cover;
+        text-align: center;
+        color:var(--green);
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    
+        h2 {
+          font-size: 48px;
+          
+        }
+    
+        p {
+          
+          font-size: 16px;
+        }
+    }
+
+    .services-section {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        background: whitesmoke;
+        padding: 70px;
+
+        
+
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding: 0 30px;
+            
+            gap: 50px;
+
+            @include pad {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 70px;
+                padding: 0;
+                width: 100%;
+                
+            }
+
+            @include mobile {
+                grid-template-columns: 1fr;
+                padding: 0;
+                width: 100%;
+            }
+
+            .service-card {
+                background: #fff;
+                color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                text-align: center;
+                position: relative;
+                height: 300px;
+                margin-top: 40px;
+
+                &.highlight {
+                    background-color: var(--green);
+                    color: white;
+                }
+
+                &:hover {
+                    
+                    color: white;
+                    transition: all 0.3s ease;
+                }
+
+                .icon-container {
+                    background-color: #e9f7ef;
+                    border-radius: 50%;
+                    padding: 20px;
+                    margin: -60px auto 20px;
+                    width: 80px;
+                    height: 80px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    img {
+                        max-width: 50px;
+                        max-height: 50px;
+                    }
+                }
+
+                h3 {
+                    margin: 20px 0;
+                    font-size: 1.5rem;
+
+                    &.h3 {
+                        color: #333;
+                    }
+                    &.highlight {
+                        color: white;
+                    }
+                }
+
+                p {
+                    font-size: 1rem;
+
+                    margin-bottom: 20px;
+
+                    &.p{
+                        color: #666;
+                    }
+
+                    &.highlight {
+                        color: white;
+                    }
+                }
+
+                .learn-more {
+                    position: absolute;
+                    bottom: -10%;
+                    left: 40%;
+                    transition: transform 0.3s ease;
+                   
+                    &:hover {
+                        transform: translateX(10px);
+                      }
+
+
+
+                    img{
+                        background-color: #fff;
+                        color: #fff;
+                       
+                        height: 50px;
+                        width: 50px;
+                        border-radius: 50%;
+                        display: flex;
+                        justify-content: center;
+                        transition: background-color 0.3s ease;
+
+                        &:hover {
+                            background-color: #0eec3e;
+                        }
+
+                        span {
+                            display: block;
+                            font-size: 1.5rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

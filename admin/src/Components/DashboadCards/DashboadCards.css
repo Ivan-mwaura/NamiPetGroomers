@@ -1,0 +1,82 @@
+.DashboadCards {
+    height: auto;
+    width: 100%;
+    border-radius: 5px;
+    padding: .5rem 0;
+}
+
+.DashboadCardsContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+}
+
+.DashboadCard {
+    width: 28%;
+    height: auto;
+    border-radius: 5px;
+    padding: .5rem 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    box-shadow: var(--boxShadow);
+}
+
+.CardLeft,
+.CardRight {
+    width: auto;
+    height: 100%;
+    gap: .5rem;
+}
+
+.CardLeft span {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.CardPercentage {
+    font-size: 1rem;
+    font-weight: 500;
+    gap: .5rem;
+    flex-direction: row;
+}
+
+.CardPercentage span {
+    font-weight: 500;
+    color: var(--green);
+}
+
+.CardPercentage i {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    transition: all .3s ease-in-out;
+    color: var(--green);
+}
+
+.fa-caret-down,
+.Negative {
+    color: var(--error-dark) !important;
+}
+
+.CardValue span {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+}
+
+.CardRight {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.SmallGraph {
+    width: 60px;
+    height: 50px;
+}

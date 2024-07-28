@@ -1,0 +1,9 @@
+.StatsContainer {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: 30% auto;
+    grid-gap: 1rem;
+    padding: .5rem;
+}
