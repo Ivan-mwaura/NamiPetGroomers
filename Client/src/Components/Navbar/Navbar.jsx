@@ -2,12 +2,28 @@ import React, { useState, useEffect } from "react";
 import "./Navbar.scss";
 import logo from '../../assets/images/nami-logo.jpg';
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { FaShoppingCart } from 'react-icons/fa'; // Import cart icon
 
 const Navbar = () => {
     const [openMenu, setOpenMenu] = useState(false);
     const [closingMenu, setClosingMenu] = useState(false);
     const [route, setRoute] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [userName, setUserName] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem("UserToken");
+        const userName = localStorage.getItem("UserEmail");
+
+        if (token) {
+            setIsAuthenticated(true);
+        }
+        if (userName) {
+            setUserName(userName);
+        }
+    }, []);
 
     useEffect(() => {
         const handleResize = () => {
@@ -44,10 +60,26 @@ const Navbar = () => {
 
     const handleRouteTo = (route) => {
         setRoute(route);
-        
-        setTimeout(() => {
-           setOpenMenu(false);         
-        },200)
+    }
+
+    const handleRouteToLogin = (route) => {
+        if (isAuthenticated) {
+            toast("You are already logged in");
+        } else {
+            setRoute(route);
+        }
+    }
+
+    const handleRouteToLogOut = (route) => {
+        if (isAuthenticated) {
+            localStorage.clear();
+            setIsAuthenticated(false);
+            setUserName("");
+            toast("You have successfully logged out");
+            setRoute(route);
+        } else {
+            toast("You are not logged in");
+        }
     }
 
     return (
@@ -69,6 +101,15 @@ const Navbar = () => {
                     <li onClick={() => handleRouteTo("/Blogs")}>BLOG</li>
                     <li onClick={() => handleRouteTo("/ContactUs")}>CONTACT</li>
                 </ul>
+            </div>
+
+            <div className="cart-icon">
+                <FaShoppingCart size={24} onClick={() => handleRouteTo("/CustomerCart")} />
+            </div>
+
+            <div className="login">
+                <button className="login-btn" onClick={() => handleRouteToLogin("/login")}>{ isAuthenticated ? `Logged in as : ${userName} `:  "Log in"}</button>
+                <button className="login-btn" onClick={() => handleRouteToLogOut("/login")}>Log Out</button>
             </div>
 
             <div className="collapsible-menu" onClick={handleClick}>

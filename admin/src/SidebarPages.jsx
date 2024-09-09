@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 
 // Lazy-loaded components
 const Dashboard = lazy(() => import("./Pages/Dashboard/Dashboard"));
-const Users = lazy(() => import("./Pages/Users/Users"));
 const UserNew = lazy(() => import("./Pages/UserNew/UserNew"));
 const User = lazy(() => import("./Pages/User/User"));
 const Login = lazy(() => import("./Pages/Login/Login"));
@@ -29,6 +28,7 @@ const ContactUsInquiries = lazy(() => import("./Pages/ContactUsInquiries/Contact
 const Subscribers = lazy(() => import("./Pages/Subcribers/Subscribers"));
 const Pricings = lazy(() => import("./Pages/Pricing/Pricing"));
 const PricingNew = lazy(() => import("./Pages/PricingNew/PricingNew"));
+const Users = lazy(() => import("./Pages/Users/Users"));
 
 const LoadingFallback = () => (
 	<div className="Loading">
@@ -54,87 +54,94 @@ const SidebarPages = () => {
 						element={loading ? <LoadingFallback /> : <Dashboard />}
 					/>
 					<Route
-						path="/users"
+						path="admin/users"
 						element={loading ? <LoadingFallback /> : <Users />}
 					/>
 					<Route
-						path="/user/new"
+						path="admin/user/new"
 						element={loading ? <LoadingFallback /> : <UserNew />}
 					/>
 					<Route
-						path="/user/:id"
+						path="admin/user/:id"
 						element={loading ? <LoadingFallback /> : <User />}
 					/>
 					<Route
-						path="/messages"
+						path="admin/messages"
 						element={loading ? <LoadingFallback /> : <Messages />}
 					/>
 					<Route
-						path="/contactUsInquiries"
+						path="admin/contactUsInquiries"
 						element={loading ? <LoadingFallback /> : <ContactUsInquiries />}
 					/>
 
 					<Route
-						path="/login"
+						path="admin/login"
 						element={loading ? <LoadingFallback /> : <Login />}
 					/>
 					<Route
-						path="/Veterinarians"
+						path="admin/Veterinarians"
 						element={loading ? <LoadingFallback /> : <Veterinarians />}
 					/>
 					<Route
-						path="veterinarian/new"
+						path="admin/veterinarian/new"
 						element={loading ? <LoadingFallback /> : <AccomodationNew />}
 					/>
 					<Route
-						path="Services"
+						path="admin/Services"
 						element={loading ? <LoadingFallback /> : <Services/>}
 					/>
 					<Route
-						path="service/new"
+						path="admin/service/new"
 						element={loading ? <LoadingFallback /> : <ServiceNew/>}
 					/>
 					<Route
-						path="payments"
+						path="admin/payments"
 						element={loading ? <LoadingFallback /> : <Payments />}
 					/>
 					<Route
-						path="blogs"
+						path="admin/blogs"
 						element={loading ? <LoadingFallback /> : <Blogs />}
 					/>
 					<Route
-						path="pricings"
+						path="admin/pricings"
 						element={loading ? <LoadingFallback /> : <Pricings />}
 					/>
 					<Route
-						path="pricing/new"
+						path="admin/pricing/new"
 						element={loading ? <LoadingFallback /> : <PricingNew />}
 
 					/>
-
+					<Route
+						path="admin/users"
+						element={loading ? <LoadingFallback /> : <Users />}
+					/>
+					<Route
+						path="admin/user/new"
+						element={loading ? <LoadingFallback /> : <UserNew />}
+					/>
 
 					<Route
-						path="Products"
+						path="admin/Products"
 						element={loading ? <LoadingFallback /> : <Products />}
 					/>
 					<Route
-						path="product/new"
+						path="admin/product/new"
 						element={loading ? <LoadingFallback /> : <ProductNew />}
 					/>
 					<Route
-						path="animalGallery"
+						path="admin/animalGallery"
 						element={loading ? <LoadingFallback /> : <AnimalGallery/>}
 					/>
 					<Route
-						path="animalGallery/new"
+						path="admin/animalGallery/new"
 						element={loading ? <LoadingFallback /> : <AnimalGalleryNew/>}
 					/>
 					<Route
-						path="blog/new"
+						path="admin/blog/new"
 						element={loading ? <LoadingFallback /> : <BlogNew />}
 					/>
 					<Route
-						path="subscribers"
+						path="admin/subscribers"
 						element={loading ? <LoadingFallback /> : <Subscribers/>}
 					/>
 				</Routes>

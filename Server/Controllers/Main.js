@@ -1,4 +1,5 @@
 const multer = require('multer');
+const { StatusCodes } = require('http-status-codes');
 const fs = require('fs');
 const path = require('path');   
 const nodemailer = require('nodemailer');
@@ -13,6 +14,9 @@ const AnimalGroomingModel = require('../Models/AnimalGrooming');
 const ContactUsInquiriesModel = require('../Models/ContactUsInquiries');
 const BlogModel = require('../Models/Blogs');
 const SubscribersModel = require('../Models/Subscribers');
+const SignUpModel = require('../Models/SignUp');
+const AdminLoginModel = require('../Models/AdminLogin');
+const cartItemsModel = require('../Models/CartItems')
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -35,6 +39,226 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+//Login
+const Login = async (req, res) =>{
+
+    try {
+        upload.any()(req, res, async function(err){
+
+            if(err){
+                console.log('Error found')
+            }   
+
+            const {email, password} = req.body;
+
+           // console.log({email, password})
+
+            if(!email || !password){
+                return res.status(StatusCodes.BAD_REQUEST).json({msg:'Please provide an email and password'})
+            }
+
+        
+
+            const user = await SignUpModel.findOne({email})
+
+            if(!user){
+                return res.status(StatusCodes.BAD_REQUEST).json({msg:'Invalid email'})
+            }
+
+            const isPasswordMatch = await user.comparePassword(password)
+
+            if(!isPasswordMatch){
+                return res.status(StatusCodes.BAD_REQUEST).json({msg:'Invalid password'})
+            }
+
+            const token = user.createJWT()
+
+            res.status(StatusCodes.OK).json({user:{email:user.email}, token, msg:'Login successful'})
+
+         
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const getLogins = (req, res) => {
+    try {
+        SignUpModel.find({}, (err, data) => {
+            if(err){
+                res.status(500).json({message: 'Error', err});
+            }else{
+                res.status(200).json({message: 'Success', data});
+            }
+        });
+    } catch (error) {
+        res.status(500).json({msg:'Server error'})
+
+    }
+}
+
+const getAdminLogins = (req, res) => {
+    try {
+        AdminLoginModel.find({}, (err, data) => {
+            if(err){
+                res.status(500).json({message: 'Error', err});
+            }else{
+                res.status(200).json({message: 'Success', data});
+            }
+        });
+    } catch (error) {
+        res.status(500).json({msg:'Server error'})
+
+    }
+}
+
+const AdminLogin = async (req, res) =>{
+    try {
+        upload.any()(req, res, async function(err){
+            if(err){
+                console.log('Error found')
+            }
+            const {email, password} = req.body;
+
+            if(!email || !password){
+                return res.status(StatusCodes.BAD_REQUEST).json({msg:'Please provide an email and password'})
+            }
+
+            const user = await AdminLoginModel.findOne({email})
+
+            if(!user){
+                return res.status(StatusCodes.BAD_REQUEST).json({msg:'Invalid email'})
+            }
+
+            const isPasswordMatch = await user.comparePassword(password)
+
+            if(!isPasswordMatch){
+                return res.status(StatusCodes.BAD_REQUEST).json({msg:'Invalid password'})
+            }
+
+            const token = user.createJWT()
+
+            res.status(StatusCodes.OK).json({user:{email:user.email}, AdminToken: token, msg:'Login successful'})
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+const deleteLogin = (req, res) => {
+    try {
+        const id = req.params.id;
+
+        SignUpModel.findByIdAndDelete(id, (err, data) => {
+            if(err){
+                res.status(500).json({message: 'Error', err});
+            }else{
+                res.status(200).json({message: 'Success, user deleted', data});
+            }
+        });
+    } catch (error) {
+        res.status(500).json({msg:'Server error'})
+
+    }
+}
+
+const deleteAdminLogin = (req, res) => {
+    try {
+        const id = req.params.id;
+
+        AdminLoginModel.findByIdAndDelete(id, (err, data) => {
+            if(err){
+                res.status(500).json({message: 'Error', err});
+            }else{
+                res.status(200).json({message: 'Success, admin deleted', data});
+            }
+        });
+    } catch (error) {
+        res.status(500).json({msg:'Server error'})
+        
+    }
+}
+
+const AdminSignUp = async (req, res) =>{
+    try {
+        upload.any()(req, res, async function(err){
+            if(err){
+                console.log('Error found')
+            }
+            const {email, password} = req.body;
+
+            if(!email || !password){
+
+                return res.status(StatusCodes.BAD_REQUEST).json({msg:'Please provide an email and password'})
+            }
+
+            const user = await AdminLoginModel.create({...req.body})
+            
+            const token = user.createJWT()
+
+            res.status(StatusCodes.CREATED).json({user:{email:user.email}, AdminToken: token, msg:'Account created successfully'})
+
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const Signup = async (req, res) =>{
+    try {
+        upload.any()(req, res, async function(err){
+            if(err){
+                console.log('Error found')
+            }
+           
+            const body = req.body
+
+            //console.log(body)
+
+           try {
+                
+                const user = await SignUpModel.create({...body})
+
+                const token = user.createJWT()
+
+                res.status(StatusCodes.CREATED).json({user:{email:user.email}, token, msg:'Account created successfully'});
+               
+
+           } catch (err) {
+            let customError = {
+                //set default
+            
+                statusCode:err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
+                msg:err.message || 'Something went wrong, try again later'
+              }
+            
+            
+              if(err.name === 'validationError'){
+                /*customError.msg = Object.values(err.errors).map((item)=> item.message).join(',')*/
+                customError.msg = `Short Password, please input a stronger password`
+                customError.statusCode = 400
+              }
+              if (err.name === 'CastError'){
+                customError.msg = `No item with id : ${err.value}`
+                customError.statusCode = 404
+              }
+              if(err.code && err.code === 11000){
+                customError.msg = `Duplicate value entered for ${Object.keys(err.keyValue)} field, please choose another value`
+            
+                customError.statusCode = 400
+              }
+           
+              //return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err })
+              
+              return res.status(customError.statusCode).json({ msg: customError.msg })
+           }
+        })
+    } catch (error) {
+        res.status(500).json({msg:'Server error'})
+        
+    }
+}
 
 //SERVICES
 
@@ -932,6 +1156,82 @@ const deleteBlog = (req, res) => {
 }
 
 
+const StorecartItems = async (req, res) => {
+    try {
+      const { userEmail, updatedCartItems } = req.body;
+  
+      if (!userEmail) {
+        return res.status(400).json({ message: "User email is required" });
+      }
+  
+      if (!updatedCartItems || !Array.isArray(updatedCartItems)) {
+        return res.status(400).json({ message: "Invalid cart items" });
+      }
+  
+      const operations = updatedCartItems.map(item => ({
+        updateOne: {
+          filter: { _id: item._id },
+          update: { $set: { ...item, userEmail } },
+          upsert: true, // This will insert the item if it does not exist
+        }
+      }));
+  
+      // Perform bulk write operations
+      await cartItemsModel.bulkWrite(operations);
+  
+      res.status(200).json({ message: "Cart items stored successfully" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Error storing cart items", error });
+    }
+  };
+
+const getCartItems = async (req, res) => {
+    try {
+      const { userEmail } = req.query;
+
+      console.log(userEmail)
+  
+      if (!userEmail) {
+        return res.status(400).json({ message: "User email is required" });
+      }
+  
+      const cartItems = await cartItemsModel.find({ userEmail });
+  
+      res.status(200).json({ message: "Cart items retrieved successfully", cartItems });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Error retrieving cart items", error });
+    }
+  }
+  
+//delete one item from cart
+
+const deleteCartItem = async (req, res) => {
+
+    try {
+        const { userEmail, itemId } = req.query;
+
+        if (!userEmail) {
+            return res.status(400).json({ message: "User email is required" });
+        }
+
+        if (!itemId) {
+            return res.status(400).json({ message: "Item ID is required" });
+        }
+
+        await cartItemsModel.deleteOne({ userEmail, _id: itemId });
+
+        res.status(200).json({ message: "Cart item deleted successfully" });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error deleting cart item", error });
+    }
+}
+
+
+
 
 module.exports = {
 
@@ -948,7 +1248,11 @@ module.exports = {
     sendSubscribeReply,
     Blogs,
     Subscribers,
-
+    Login,
+    Signup,
+    AdminSignUp,
+    AdminLogin,
+    StorecartItems,
 
     //get controllers
     getServices,
@@ -960,7 +1264,9 @@ module.exports = {
     getPricing,
     getBlogs,
     getSubscribers,
-    
+    getLogins,
+    getAdminLogins,
+    getCartItems,
 
     //update controllers
     updateService,
@@ -978,6 +1284,10 @@ module.exports = {
     deleteAnimalGrooming,
     deleteBlog,
     deleteSubscriber,
-    deletePricing
+    deletePricing,
+    deleteLogin,
+    deleteAdminLogin,
+    deleteCartItem
+
 
 }

@@ -10,7 +10,7 @@ const accountSid = 'AC3b6aeb27b6e82dce56558866cc577445';
 const authToken = 'b412ac9975759e6bf2c701bac5e1ad75';
 const client = new twilio(accountSid, authToken);
 
-const getAccessToken = async () => {
+const getAccessToken = async (req, res) => {
   const url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
   const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString('base64');
 
@@ -22,8 +22,8 @@ const getAccessToken = async () => {
     });
     accessToken = response.data.access_token;
   } catch (error) {
-    //console.error('Error fetching access token:', error);
-    res.status(500).json({ error: 'Failed to fetch access token' });
+    console.error('Error fetching access token:', error);
+    //res.status(500).json({ error: 'Failed to fetch access token' });
   }
 };
 

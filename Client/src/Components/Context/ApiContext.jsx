@@ -11,14 +11,13 @@ const ApiContext = ({children}) => {
 	const [blog, setBlog] = useState([]);
 
 	const addToCart = (product) => {
-
-	localStorage.setItem("cartItems", JSON.stringify(product));
-
-	const cartItems = JSON.parse(localStorage.getItem("cartItems"));	
-	setCart([...cart, cartItems]);
+		const existingCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+		const updatedCartItems = [...existingCartItems, product];
+		
+		localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+		setCart(updatedCartItems);
 	};
-
-
+	
 	return (
 		<AppContext.Provider 
 		value={{

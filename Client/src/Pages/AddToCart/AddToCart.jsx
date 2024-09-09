@@ -5,12 +5,13 @@ import { AppContext } from '../../Components/Context/ApiContext';
 import { toast } from 'react-toastify';
 import './AddToCart.scss';
 import { ColorRing } from 'react-loader-spinner';
+import axios from 'axios';
 
 const AddToCart = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { product } = location.state || {};
-  const { addToCart } = useContext(AppContext);
+  //const { addToCart } = useContext(AppContext);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
 
@@ -35,21 +36,37 @@ const AddToCart = () => {
 
 
 
-  const handleAddToCart = () => {
+const handleAddToCart = () => {
+  const itemToAdd = { ...product, quantity };
 
-    const itemToAdd = { ...product, quantity };
+  // Retrieve the existing cart items from localStorage
+  const existingCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
+  // Add the new item to the cart array
+  const updatedCartItems = [...existingCartItems, itemToAdd];
 
-    addToCart(itemToAdd);
+  // Save the updated cart back to localStorage
+  localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
 
-    setLoading(true);
-    toast.success("Item added successfully to cart!");
-    setTimeout(() => {
-     navigate('/Cart');
-     setLoading(false);
+  const userEmail = localStorage.getItem("UserEmail") || [];
 
-    }, 300); 
-  };
+  console.log('cartGoods', updatedCartItems);
+  console.log('userEmail', userEmail);
+
+  axios.post('http://localhost:5000/api/v1/storeCartItems', { userEmail,updatedCartItems })
+    .then((response) => {
+      if (response.status === 200) {
+        toast.success('Cart items stored successfully');
+      }
+    });
+
+  setLoading(true);
+  toast.success("Item added successfully to cart!");
+  setTimeout(() => {
+    navigate('/Cart');
+    setLoading(false);
+  }, 300); 
+};
 
   return (
     

@@ -8,6 +8,7 @@ export const AppContext = createContext();
 const ApiProvider = ({ children }) => {
 	const [data, setData] = useState({
 		users: [],
+		admins: [],
 		services: [],
 		veterinarians: [],
 		messages: [],
@@ -34,7 +35,8 @@ const ApiProvider = ({ children }) => {
 
 	const endpoints = useMemo(
 		() => [
-			{ key: "users", url: "http://localhost:5000/api/v1/getServices" },
+			{ key: "users", url: "http://localhost:5000/api/v1/getLogins" },
+			{ key: "admins", url: "http://localhost:5000/api/v1/getAdminLogins" },
 			{ key: "services", url: "http://localhost:5000/api/v1/getServices" },
 			{
 				key: "veterinarians",

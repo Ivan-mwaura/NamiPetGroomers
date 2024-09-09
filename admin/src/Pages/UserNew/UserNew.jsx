@@ -1,193 +1,99 @@
 import React, { useState } from "react";
-import axios from "axios";
 import "./UserNew.css";
-import UserNewRight from "../../Components/UserNewRight/UserNewRight";
-import UserNewLeft from "../../Components/UserNewLeft/UserNewLeft";
-import { Snackbar, Alert } from "@mui/material";
+import CustomTextField from "../../Utils/CustomTextField";
+import CustomButton from "../../Utils/CustomButton";
+import { useHistory } from "react-router-use-history";
+import axios from "axios"; // Import axios for API calls
+import { toast } from "react-toastify";
 
 const UserNew = () => {
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
-	const [success, setSuccess] = useState(null);
-	const [userNewData, setUserNewData] = useState({
-		name: "",
-		email: "",
-		phone: "",
-		username: "",
-		location: "",
-		userType: "",
-		description: "",
-		profilePicture: "",
-	});
+  const history = useHistory();
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setUserNewData((prevData) => ({
-			...prevData,
-			[name]: value,
-		}));
-	};
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    role: "admin", // Default role is admin
+  });
+  const [errors, setErrors] = useState({});
 
-	const handleFileChange = async (event) => {
-		const file = event.target.files[0];
-		const CLOUD_NAME = "agrisolve";
-		const UPLOAD_PRESET = "agrisolve";
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const newErrors = {};
 
-		setLoading(true);
+    // Validate required fields
+    if (!formData.email) newErrors.email = "Email is required";
+    if (!formData.password) newErrors.password = "Password is required";
 
-		try {
-			const formData = new FormData();
-			formData.append("file", file);
-			formData.append("upload_preset", UPLOAD_PRESET);
+    setErrors(newErrors);
 
-			const uploadResponse = await axios.post(
-				`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-				formData
-			);
+    if (Object.keys(newErrors).length === 0) {
+      try {
+        await axios.post("http://localhost:5000/api/v1/adminSignUp", formData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        toast.success("Admin created successfully");
+        console.log("Admin created successfully", formData);
+        history.push("/users");
+      } catch (error) {
+        console.error("Error creating admin:", error);
+      }
+    }
+  };
 
-			setUserNewData((prevData) => ({
-				...prevData,
-				profilePicture: uploadResponse.data.secure_url,
-			}));
-		} catch (err) {
-			setError("Failed to upload image");
-		} finally {
-			setLoading(false);
-		}
-	};
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
-	const addUser = async (userData) => {
-		try {
-			const response = await axios.post(
-				"http://localhost:3008/users",
-				userData
-			);
-			return response.data;
-		} catch (error) {
-			if (error.response) {
-				console.error("Error response data:", error.response.data);
-				throw new Error(error.response.data.message);
-			} else {
-				console.error("Error:", error.message);
-				throw new Error("Failed to add user");
-			}
-		}
-	};
+  const renderCustomTextField = (
+    name,
+    label,
+    placeholder,
+    type = "text",
+    multiline = false,
+    rows = 1
+  ) => (
+    <div className="InputGroup">
+      <label htmlFor={name}>{label}</label>
+      <CustomTextField
+        id={name}
+        name={name}
+        placeholder={placeholder}
+        size="medium"
+        type={type}
+        multiline={multiline}
+        rows={rows}
+        value={formData[name]}
+        onChange={handleChange}
+        error={!!errors[name]}
+        helperText={errors[name] && errors[name]}
+      />
+    </div>
+  );
 
-	const handleSubmit = async () => {
-		try {
-			setLoading(true);
-			await addUser(userNewData);
-			setUserNewData({
-				name: "",
-				email: "",
-				phone: "",
-				username: "",
-				location: "",
-				userType: "",
-				description: "",
-				profilePicture: "",
-			});
-			setSuccess("User added successfully!");
-			setError(null);
-		} catch (err) {
-			setError(err.message);
-			setSuccess(null);
-		} finally {
-			setLoading(false);
-		}
-	};
-
-	const editUser = async (userData) => {
-		try {
-			const response = await axios.patch(
-				`http://localhost:3008/users/${userData.id}`,
-				userData
-			);
-			return response.data;
-		} catch (error) {
-			if (error.response) {
-				console.error("Error response data:", error.response.data);
-				throw new Error(error.response.data.message);
-			} else {
-				console.error("Error:", error.message);
-				throw new Error("Failed to edit user");
-			}
-		}
-	};
-
-	const handleEditSubmit = async () => {
-		try {
-			setLoading(true);
-			await editUser(userNewData);
-			setSuccess("User edited successfully!");
-			setError(null);
-		} catch (err) {
-			setError(err.message);
-			setSuccess(null);
-		} finally {
-			setLoading(false);
-		}
-	};
-
-	const handleCloseSnackbar = () => {
-		setError(null);
-		setSuccess(null);
-	};
-
-	console.log(userNewData);
-	if (loading) {
-		return (
-			<div className="Loading">
-				<div className="Spinner">
-					
-				</div>
-			</div>
-		);
-	}
-
-	return (
-		<div className="UserNew User">
-			<div className="UserNewContainer UserContainer">
-				<UserNewLeft
-					userNewData={userNewData}
-					handleFileChange={handleFileChange}
-				/>
-				<UserNewRight
-					userNewData={userNewData}
-					handleChange={handleChange}
-					handleSubmit={handleSubmit}
-					handleEditSubmit={handleEditSubmit}
-				/>
-			</div>
-			<Snackbar
-				open={Boolean(error)}
-				autoHideDuration={6000}
-				onClose={handleCloseSnackbar}
-			>
-				<Alert
-					onClose={handleCloseSnackbar}
-					severity="error"
-					sx={{ width: "100%" }}
-				>
-					{error}
-				</Alert>
-			</Snackbar>
-			<Snackbar
-				open={Boolean(success)}
-				autoHideDuration={6000}
-				onClose={handleCloseSnackbar}
-			>
-				<Alert
-					onClose={handleCloseSnackbar}
-					severity="success"
-					sx={{ width: "100%" }}
-				>
-					{success}
-				</Alert>
-			</Snackbar>
-		</div>
-	);
+  return (
+    <div className="AccomodationNew DisplayFlex">
+      <div className="Header DisplayFlex">
+        <span>Dashboard</span> <i className="fas fa-angle-right"></i>
+        <span>Users</span> <i className="fas fa-angle-right"></i>
+        <span>Add Admin</span>
+      </div>
+      <form onSubmit={onSubmit} className="AccomodationNewContainer DisplayFlex">
+        <div className="EventsTop DisplayFlex">
+          <div className="EventDetails DisplayFlex">
+            <h2>Admin Details</h2>
+            {renderCustomTextField("email", "Email", "admin@example.com", "email")}
+            {renderCustomTextField("password", "Password", "Set a password", "password")}
+          </div>
+        </div>
+        <div className="BtnGroup DisplayFlex">
+          <CustomButton text="Submit" type="submit" customStyles={{ backgroundColor: "var(--green)" }} />
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default UserNew;

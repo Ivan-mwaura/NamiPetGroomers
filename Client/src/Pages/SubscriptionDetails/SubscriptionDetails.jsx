@@ -95,7 +95,7 @@ const SubscriptionDetails = () => {
     <div className="subscription-details">
       <div className="subscription-card">
         <img src={subscription.image || image2} alt={subscription.pricingName} />
-        <h2>{subscription.pricingName}</h2>
+        <h2>{subscription.pricingName} Plan</h2>
         <h3>{subscription.pricingPrice} <span>Ksh/mo</span></h3>
         <p>{subscription.pricingDescription}</p>
         <h4>Benefits:</h4>

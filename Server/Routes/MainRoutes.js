@@ -35,6 +35,17 @@ const  {
     getSubscribers,
     deleteSubscriber,
     updateSubscriber,
+    Login,
+    Signup,
+    AdminLogin,
+    AdminSignUp,
+    getLogins,
+    getAdminLogins,
+    deleteLogin,
+    deleteAdminLogin,
+    StorecartItems,
+    getCartItems,
+    deleteCartItem
 
 } = require('../Controllers/Main')
 
@@ -51,6 +62,13 @@ router.route('/sendReply').post(sendReply)
 router.route('/sendSubscribeReply').post(sendSubscribeReply)
 router.route('/blogs').post(Blogs)
 router.route('/subscribers').post(Subscribers)
+router.route('/login').post(Login)
+router.route('/signup').post(Signup)
+router.route('/adminLogin').post(AdminLogin)
+router.route('/adminSignUp').post(AdminSignUp)
+router.route('/storeCartItems').post(StorecartItems)
+
+
 
 //get routes
 router.route('/getServices').get(getServices)
@@ -62,6 +80,9 @@ router.route('/getContactUsInquiries').get(getContactUsInquiries)
 router.route('/getPricing/:id').get(getPricing)
 router.route('/getBlogs').get(getBlogs)
 router.route('/getSubscribers').get(getSubscribers)
+router.route('/getLogins').get(getLogins)
+router.route('/getAdminLogins').get(getAdminLogins)
+router.route('/getCartItems').get(getCartItems)
 
 
 //update routes
@@ -81,6 +102,9 @@ router.route('/deleteAnimalGrooming/:id').delete(deleteAnimalGrooming)
 router.route('/deleteBlog/:id').delete(deleteBlog)
 router.route('/deleteSubscriber/:id').delete(deleteSubscriber)
 router.route('/deletePricing/:id').delete(deletePricing)
+router.route('/deleteLogin/:id').delete(deleteLogin)
+router.route('/deleteAdminLogin/:id').delete(deleteAdminLogin)
+router.route('/deleteCartItem').delete(deleteCartItem)
 
 
 module.exports = router;

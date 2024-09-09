@@ -1,11 +1,12 @@
 import React, { lazy, useState, useEffect, Suspense } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes, useLocation } from "react-router-dom";
 import { ColorRing } from "react-loader-spinner";
 import ErrorBoundary from "./Utils/ErrorBoundary";
 import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer/Footer";
 import Cart from "./Pages/Cart/Cart";
-
+import PublicRoute from "./Components/PublicRoute";
+import ProtectedRoute from "./Components/ProtectedRuote";
 
 const Homepage = lazy(() => import("./Pages/Homepage/Homepage"));
 const PetCategorySection = lazy(() => import("./Pages/Homepage/Petshop/PetCategorySection/PetCategorySection"));
@@ -19,74 +20,132 @@ const AboutUs = lazy(() => import("./Pages/About/AboutUs"));
 const Gallery = lazy(() => import("./Pages/Gallery/Gallery"));
 const SubscriptionDetails = lazy(() => import("./Pages/SubscriptionDetails/SubscriptionDetails"));
 const BlogDetails = lazy(() => import("./Pages/Blogs/BlogDetails"));
+const LoginSignUp = lazy(() => import("./Pages/LoginSignUp/LoginSignUp"));
+const CustomerCart = lazy(() => import("./Pages/CustomerCart/CustomerCart"));
 
 const MainRoutes = () => {
-    const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
-    const loaderContainer = {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        backgroundColor: "var(--primary-color)",
-    };
+  const loaderContainer = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "100vh",
+    backgroundColor: "var(--primary-color)",
+  };
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 300);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 300);
 
-        return () => clearTimeout(timer);
-    }, []);
+    return () => clearTimeout(timer);
+  }, []);
 
-    return (
-        <>
-            {loading ? (
-                <div style={loaderContainer}>
-                    <ColorRing
-                        colors={["rgb(0, 189, 86)", "rgb(0, 189, 86)", "rgb(0, 189, 86)", "rgb(0, 189, 86)", "rgb(0, 189, 86)"]}
-                        height={80}
-                        width={50}
-                        timeout={1000}
-                    />
-                </div>
-            ) : (
-                <ErrorBoundary>
-                    <Navbar />
-                    <Suspense 
-					fallback={<div style={loaderContainer}>
-                      {/*}  <ColorRing
-                        colors={["rgb(0, 189, 86)", "rgb(0, 189, 86)", "rgb(0, 189, 86)", "rgb(0, 189, 86)", "rgb(0, 189, 86)"]}
-                        height={80}
-                        width={80}
-                        timeout={3000}
-                        />*/}
-                    </div>}
-					
-					>
-                        <Routes>
-                            <Route path="/"  element={<Homepage />} />
-                            <Route path="/Petshop/PetCategorySection" element={<PetCategorySection />} />
-                            <Route path="/ContactUs" element={<ContactUs/>}/>
-                            <Route path="/Services" element={<Services/>}/>
-                            <Route path="/Veterinarians" element={<Veterinarians/>} />
-                            <Route path="/Pricing" element={<Pricing/>} />
-                            <Route path="/Blogs" element={<Blogs/>} />
-                            <Route path="/AddToCart" element={<AddToCart/>} />
-                            <Route path="/Cart" element={<Cart/>}/>
-                            <Route path="/AboutUs" element={<AboutUs/>}/>
-                            <Route path="/Gallery" element={<Gallery/>}/>
-                            <Route path="/subscription/:id" element={<SubscriptionDetails/>} />.
-                            <Route path="/blogDetails" element={<BlogDetails />} />
-                            {/*  <Route path="/Petshop/PetCategorySection/:category" element={<PetCategorySection />} />
-                            <Route path="/Petshop/PetCategorySection/:category/:subcategory" element={<PetCategorySection />} />*/}
-                        </Routes>
-                    </Suspense>
-                    <Footer />
-                </ErrorBoundary>
-            )}
-        </>
-    );
-}
+  const isLoginPage = location.pathname === '/login';
+
+  return (
+    <>
+      {loading ? (
+        <div style={loaderContainer}>
+          <ColorRing
+            colors={["rgb(0, 189, 86)", "rgb(0, 189, 86)", "rgb(0, 189, 86)", "rgb(0, 189, 86)", "rgb(0, 189, 86)"]}
+            height={80}
+            width={50}
+            timeout={1000}
+          />
+        </div>
+      ) : (
+        <ErrorBoundary>
+          {!isLoginPage && <Navbar />}
+          <Suspense fallback={<div style={loaderContainer}></div>}>
+            <Routes>
+              {/* Public Route */}
+              <Route path="/login" element={
+                <PublicRoute>
+                  <LoginSignUp />
+                </PublicRoute>
+              } />
+              
+              {/* Protected Routes */}
+              <Route path="/" element={
+                <ProtectedRoute>
+                  <Homepage />
+                </ProtectedRoute>
+              } />
+              <Route path="/Petshop/PetCategorySection" element={
+                <ProtectedRoute>
+                  <PetCategorySection />
+                </ProtectedRoute>
+              } />
+              <Route path="/ContactUs" element={
+                <ProtectedRoute>
+                  <ContactUs />
+                </ProtectedRoute>
+              } />
+              <Route path="/Services" element={
+                <ProtectedRoute>
+                  <Services />
+                </ProtectedRoute>
+              } />
+              <Route path="/Veterinarians" element={
+                <ProtectedRoute>
+                  <Veterinarians />
+                </ProtectedRoute>
+              } />
+              <Route path="/Pricing" element={
+                <ProtectedRoute>
+                  <Pricing />
+                </ProtectedRoute>
+              } />
+              <Route path="/Blogs" element={
+                <ProtectedRoute>
+                  <Blogs />
+                </ProtectedRoute>
+              } />
+              <Route path="/AddToCart" element={
+                <ProtectedRoute>
+                  <AddToCart />
+                </ProtectedRoute>
+              } />
+              <Route path="/Cart" element={
+                <ProtectedRoute>
+                  <Cart />
+                </ProtectedRoute>
+              } />
+              <Route path="/AboutUs" element={
+                <ProtectedRoute>
+                  <AboutUs />
+                </ProtectedRoute>
+              } />
+              <Route path="/Gallery" element={
+                <ProtectedRoute>
+                  <Gallery />
+                </ProtectedRoute>
+              } />
+              <Route path="/subscription/:id" element={
+                <ProtectedRoute>
+                  <SubscriptionDetails />
+                </ProtectedRoute>
+              } />
+              <Route path="/blogDetails" element={
+                <ProtectedRoute>
+                  <BlogDetails />
+                </ProtectedRoute>
+              } />
+              <Route path="/CustomerCart" element={
+                <ProtectedRoute>
+                  <CustomerCart />
+                </ProtectedRoute>
+              } />
+            </Routes>
+          </Suspense>
+          {!isLoginPage && <Footer />}
+        </ErrorBoundary>
+      )}
+    </>
+  );
+};
 
 export default MainRoutes;

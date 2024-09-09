@@ -11,7 +11,7 @@
         justify-content: flex-start;
         align-items: flex-start;
 
-        & .UserTop {
+        & .UsersTop {
             width: 100%;
             height: 10%;
             flex-direction: row;
@@ -26,7 +26,7 @@
             }
         }
 
-        & .UserBottom {
+        & .UsersBottom {
             width: 100%;
             height: 90%;
         }

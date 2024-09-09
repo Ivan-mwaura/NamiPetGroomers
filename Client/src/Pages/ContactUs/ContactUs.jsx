@@ -125,6 +125,7 @@ const ContactUs = () => {
         </div>
       </div>
       <div>
+        <p style={{textAlign: "center", fontSize: "20px", marginTop: "20px", marginBottom: "10px", fontWeight: 700}}> Grab a cup of coffee with us</p>
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.010913817372!2d36.97353247480324!3d-1.1526952988362664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f47669d1b7c6d%3A0xc6d72bd8a6f657c4!2sNami%20pet%20groomers!5e0!3m2!1sen!2ske!4v1719314385913!5m2!1sen!2ske"
           width="100%"

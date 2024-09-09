@@ -11,11 +11,15 @@ import ClientsFeedback from './ClientsFeedback/ClientsFeedback';
 import Pricing from './Pricing/Pricing';
 import Consultation from './Consultation/Consultation';
 import Petshop from './Petshop/Petshop';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
 const Homepage = () => {
   const [servicesData, setServicesData] = useState([]);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
+
+  const handleRouteTo = (path) => {
+    window.location.href = `/${path}`;
+  }
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -44,7 +48,7 @@ const Homepage = () => {
       <div className="welcome-section">
         <div className="welcome-content">
           <h1>Highest Quality Care For Pets You&apos;ll Love</h1>
-          <button>LEARN MORE</button>
+          <button onClick={() =>handleRouteTo('AboutUs')}>LEARN MORE ABOUT US</button>
         </div>
       </div>
       <div className="services-section">

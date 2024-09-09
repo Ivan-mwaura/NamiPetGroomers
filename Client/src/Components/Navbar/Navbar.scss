@@ -9,11 +9,13 @@
         @content;
     }
 }
+
 @mixin chromebook {
     @media screen and (max-width: 900px) {
         @content;
     }
 }
+
 @mixin tablet {
     @media screen and (max-width: 768px) {
         @content;
@@ -57,7 +59,6 @@
     font-size: 1rem;
     transition: all 0.3s ease;
 
-
     &.menu-open {
         height: auto;
     }
@@ -81,6 +82,7 @@
             border-radius: 50%;
             object-fit: cover;
         }
+        
         h1 {
             font-size: 1.7rem;
             font-weight: 700;
@@ -110,7 +112,6 @@
             margin: 0;
             padding: 0;
 
-
             .link-1 {
                 color: var(--green);
                 border-bottom: 3px solid var(--green);
@@ -119,10 +120,8 @@
             li {
                 cursor: pointer;
                 padding: 15px;
-               
-
                 box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
-                 //remove box shadow at the top
+
                 &:first-child {
                     box-shadow: none;
                 }
@@ -131,7 +130,6 @@
                     transition: all .3s ease-in-out;
                     color: var(--green);
                     border-bottom: 1px solid var(--green);
-                    
                 }
             }
         }
@@ -177,6 +175,47 @@
         }
     }
 
+    .cart-icon {
+        margin-right: 20px;
+        cursor: pointer;
+        color: #666;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: var(--green);
+        }
+
+        @include tablet {
+            display: none;
+        }
+    }
+
+    .login {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+
+        @include tablet {
+            display: none;
+        }
+
+        .login-btn {
+            background-color: var(--green);
+            color: var(--white);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+
+            &:hover {
+                transform: translate(0, -5px);
+            }
+        }
+    }
+
     .collapsible-menu {
         display: flex;
         flex-direction: row;
@@ -198,4 +237,3 @@
         animation: slideUp 0.5s ease forwards;
     }
 }
-

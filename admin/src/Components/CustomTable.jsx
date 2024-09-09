@@ -11,6 +11,8 @@ import {
   Box,
   Typography,
   TextField,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import styled from "styled-components";
 import CustomButton from "../Utils/CustomButton";
@@ -61,10 +63,11 @@ const CustomTable = ({
   const [clickTimer, setClickTimer] = useState(null);
   const [updatedData, setUpdatedData] = useState([]); // Initialize as empty array
   const [editMode, setEditMode] = useState({}); // Add state for edit mode
+  const [displayType, setDisplayType] = useState("all"); // State to track display type
 
   useEffect(() => {
-    setUpdatedData(data); // Update state when data changes
-  }, [data]);
+    filterData(displayType);
+  }, [data, displayType]);
 
   const handleSelectAll = (event) => {
     if (event.target.checked) {
@@ -177,12 +180,12 @@ const CustomTable = ({
           update: `http://localhost:5000/api/v1/updateBlog/`,
           delete: `http://localhost:5000/api/v1/deleteBlog/`,
         };
-        case "subscribers":
+      case "subscribers":
         return {
           update: `http://localhost:5000/api/v1/updateSubscriber/`,
           delete: `http://localhost:5000/api/v1/deleteSubscriber/`,
         };
-        case "pricings":
+      case "pricings":
         return {
           update: `http://localhost:5000/api/v1/updatePricing/`,
           delete: `http://localhost:5000/api/v1/deletePricing/`,
@@ -227,8 +230,33 @@ const CustomTable = ({
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
+  const filterData = (type) => {
+    let filteredData;
+    if (type === "admins") {
+      filteredData = data.filter((item) => item.Roles === "admin");
+    } else if (type === "users") {
+      filteredData = data.filter((item) => item.Roles === "user");
+    } else {
+      filteredData = data;
+    }
+    setUpdatedData(filteredData);
+  };
+
   return (
     <Box sx={{ padding: ".5rem" }}>
+      {context === "users" && (
+        <Box sx={{ display: "flex", justifyContent: "flex-end", marginBottom: "1rem" }}>
+          <Select
+            value={displayType}
+            onChange={(e) => setDisplayType(e.target.value)}
+            displayEmpty
+          >
+            <MenuItem value="all">All</MenuItem>
+            <MenuItem value="admins">Admins</MenuItem>
+            <MenuItem value="users">Users</MenuItem>
+          </Select>
+        </Box>
+      )}
       <CustomTableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -307,7 +335,7 @@ const CustomTable = ({
                           onClick={() => handleDeleteClick(row._id, row.animalType, context)}
                         />
                       )}
-                      {(context === "messages" || context === "contactUsInquiries" || row.daysRemaining === 0) && (
+                      {(context === "messages" || context === "contactUsInquiries" || row.daysRemaining === 0 && context === "subscribers") && (
                         <CustomButton
                           size="small"
                           text="Reply"

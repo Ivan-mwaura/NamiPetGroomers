@@ -9,8 +9,8 @@ const OurPricing = () => {
         <div className="our-pricing">
 
             <div className="header">
-                <p>Home / pricing</p>
-                <h1>Pricing</h1>
+                <p>Home / Membership</p>
+                <h1>Membership</h1>
             </div>
 
             <div className="pricing">

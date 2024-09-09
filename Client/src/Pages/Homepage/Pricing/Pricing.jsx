@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Pricing.scss';
 import pricingImg from '../../../assets/images/pricing-2.jpg';
 
 const Pricing = () => {
   const [pricingData, setPricingData] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPricingData = async () => {
@@ -21,14 +19,14 @@ const Pricing = () => {
     fetchPricingData();
   }, []);
 
-  const handleGetStarted = (id) => {
+  const handleJoinNow = (id) => {
     window.location.href = `/subscription/${id}`;
   };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <div>
-        <h1 className="pricing-heading">Our Affordable Pricing</h1>
+        <h1 className="pricing-heading">Choose Your Membership Plan</h1>
       </div>
       <div className="pricing">
         {pricingData.map((pricing, index) => (
@@ -41,7 +39,7 @@ const Pricing = () => {
                 <li key={idx}>{benefit}</li>
               ))}
             </ul>
-            <button onClick={() => handleGetStarted(pricing._id)}>GET STARTED</button>
+            <button onClick={() => handleJoinNow(pricing._id)}>JOIN NOW</button>
           </div>
         ))}
       </div>

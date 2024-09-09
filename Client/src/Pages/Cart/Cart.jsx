@@ -1,20 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../Components/Context/ApiContext';
+import React, { useEffect, useState } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Typography, Box } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Typography, Box, InputAdornment } from "@mui/material";
 import axios from 'axios';
 import './Cart.scss';
 
 const Cart = () => {
-  const { cart, setCart } = useContext(AppContext);
+  const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [open, setOpen] = useState(false);
-  const [phone, setPhone] = useState('');
+  const [phone, setPhone] = useState('7'); // Default start from '7'
   const [paymentStatus, setPaymentStatus] = useState('');
 
   useEffect(() => {
-    const newTotalPrice = cart.reduce((sum, item) => {
+    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    setCart(cartItems);
+
+    const newTotalPrice = cartItems.reduce((sum, item) => {
       const price = parseFloat(item.productPrice);
       const quantity = parseInt(item.quantity, 10);
       if (!isNaN(price) && !isNaN(quantity)) {
@@ -23,17 +25,20 @@ const Cart = () => {
         return sum;
       }
     }, 0);
+    
     setTotalPrice(newTotalPrice);
-  }, [cart]);
-
+  }, []);
+  
   const handleDelete = (index) => {
     const newCart = [...cart];
     newCart.splice(index, 1);
     setCart(newCart);
+
+    localStorage.setItem("cartItems", JSON.stringify(newCart));
   };
 
   const handleContinueShopping = () => {
-    window.location.href =  '/Petshop/PetCategorySection';
+    window.location.href = '/Petshop/PetCategorySection';
   };
 
   const handleCheckout = () => {
@@ -46,14 +51,15 @@ const Cart = () => {
   };
 
   const handlePayment = async () => {
+    const fullPhoneNumber = `254${phone}`; // Prepend 254 to the phone number
     try {
-      await axios.post('http://localhost:5000/api/v1/payment', { phone, amount: totalPrice })
-      .then((response) => {
-        if (response.status === 200) {
-          setPaymentStatus('Payment initiated successfully. Check your phone.');
-          toast.success('Payment initiated successfully. Check your phone.');
-        }
-      });
+      await axios.post('http://localhost:5000/api/v1/payment', { phone: fullPhoneNumber, amount: totalPrice })
+        .then((response) => {
+          if (response.status === 200) {
+            setPaymentStatus('Payment initiated successfully. Check your phone.');
+            toast.success('Payment initiated successfully. Check your phone.');
+          }
+        });
       setPaymentStatus('Payment initiated successfully. Check your phone.');
     } catch (error) {
       setPaymentStatus('Failed to initiate payment');
@@ -123,6 +129,9 @@ const Cart = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
+              InputProps={{
+                startAdornment: <InputAdornment position="start">+254</InputAdornment>,
+              }}
             />
             {paymentStatus && <Typography color="error">{paymentStatus}</Typography>}
           </Box>
