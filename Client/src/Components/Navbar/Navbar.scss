@@ -1,3 +1,4 @@
+
 @mixin laptop {
     @media screen and (max-width: 1600px) {
         @content;
@@ -9,13 +10,11 @@
         @content;
     }
 }
-
 @mixin chromebook {
     @media screen and (max-width: 900px) {
         @content;
     }
 }
-
 @mixin tablet {
     @media screen and (max-width: 768px) {
         @content;
@@ -28,53 +27,32 @@
     }
 }
 
-@keyframes slideDown {
-    0% {
-        transform: translateY(-90%);
-    }
-    100% {
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideUp {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-90%);
-    }
-}
-
 .navbar {
+    position: sticky;
+    top: 0; // Ensures the navbar sticks to the top while scrolling
+    z-index: 100;
     width: 100%;
     height: 100px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    z-index: 100;
-    box-shadow: var(--boxShadow);
     background-color: var(--white);
-    font-size: 1rem;
+    box-shadow: var(--boxShadow);
     transition: all 0.3s ease;
-
-    &.menu-open {
-        height: auto;
-    }
-
-    @include tablet {
-        justify-content: space-between;
-        padding-left: 20px;
-        padding-right: 10px;
-    }
+    
 
     .navbar-logo {
         display: flex;
-        flex-direction: row;
+        justify-content: center;
         align-items: center;
         gap: 20px;
         cursor: pointer;
+        padding-left: 30px;
+
+        @include tablet {
+            padding-left: 10px;
+        }
 
         img {
             width: 70px;
@@ -82,7 +60,7 @@
             border-radius: 50%;
             object-fit: cover;
         }
-        
+
         h1 {
             font-size: 1.7rem;
             font-weight: 700;
@@ -94,82 +72,117 @@
         }
     }
 
-    .openSidenav {
-        width: 100%;
-        background-color: var(--white);
-        position: absolute;
-        top: 10%;
-        right: 0;
-        z-index: 1000;
-        transform: translateY(-90%);
-        translate: all 0.5s ease-in-out;
-        animation: slideDown 0.5s ease forwards;
-
-        ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-            padding: 0;
-
-            .link-1 {
-                color: var(--green);
-                border-bottom: 3px solid var(--green);
-            }
-
-            li {
-                cursor: pointer;
-                padding: 15px;
-                box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
-
-                &:first-child {
-                    box-shadow: none;
-                }
-
-                &:hover {
-                    transition: all .3s ease-in-out;
-                    color: var(--green);
-                    border-bottom: 1px solid var(--green);
-                }
-            }
-        }
-    }
-
     .navbar-links {
-        @include tablet {
-            display: none;
-        }
-
+        display: flex;
+        justify-content: center; /* Center the links */
+        align-items: center;
+        width: 100%; /* Allow it to take the full width */
         ul {
+            display: flex;
+            justify-content: center; /* Center the list items horizontally */
+            align-items: center; /* Vertically align the list items */
+            //gap: 30px; /* Add some spacing between the links */
             list-style: none;
-            display: grid;
-            grid-template-columns: auto auto auto auto auto auto auto auto;
-            gap: 20px;
+            padding: 0;
+            margin: 0;
             font-size: .9rem;
             font-weight: 650;
 
-            @include pad {
-                font-size: .8rem;
-                gap: 10px;
-            }
-
-            .link-1 {
-                color: var(--green);
-                border-bottom: 3px solid var(--green);
-            }
-
             li {
+                padding: 10px 20px;
                 cursor: pointer;
-                padding: 10px;
-
-                @include pad {
-                    padding: 5px;
+                &:hover {
+                    color: var(--green);
                 }
+            }
+
+            .login-out-btn{
+
+                background-color: var(--green);
+                color: var(--white);
+                padding: 10px 20px;
+                height: 40px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: 600;
+                transition: all 0.3s ease;
 
                 &:hover {
-                    transition: all .3s ease-in-out;
-                    color: var(--green);
-                    border-bottom: 3px solid var(--green);
+                    transform: translate(0, -5px);
+                }
+
+   
+
+            }
+
+            .login-btn {
+                background-color: var(--green);
+                color: var(--white);
+                padding: 10px 20px;
+                height: 40px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: 600;
+                transition: all 0.3s ease;
+    
+                &:hover {
+                    transform: translate(0, -5px);
+                }
+    
+                .user-display {
+                    display: flex;
+                    align-items: center;
+                  }
+                  
+                  .user-initial {
+                    background-color: #333; /* You can customize the background color */
+                    color: #fff;
+                    border-radius: 50%; /* Make it circular */
+                    width: 35px; /* Size of the avatar */
+                    height: 35px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 18px; /* Adjust font size */
+                    margin-right: 8px; /* Space between the avatar and the username */
+                  }
+                  
+            }
+        }
+        
+        
+
+        @include tablet {
+            display: none;
+        }
+    }
+
+    .open {
+        @include tablet {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 100px;
+            width: 100%;
+            background-color: var(--white);
+            z-index: 1000;
+
+            ul {
+                flex-direction: column;
+                gap: 15px;
+
+                li {
+                    padding: 10px 20px;
+                    &:hover {
+                        background-color: var(--light-gray);
+                    }
+                }
+
+                .login-btn {
+                    width: 100%;
+                    padding: 10px;
                 }
             }
         }
@@ -192,48 +205,24 @@
 
     .login {
         display: flex;
-        flex-direction: row;
-        gap: 10px;
+        justify-content: center; /* Center the login buttons */
         align-items: center;
+        gap: 10px;
 
         @include tablet {
             display: none;
         }
-
-        .login-btn {
-            background-color: var(--green);
-            color: var(--white);
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-
-            &:hover {
-                transform: translate(0, -5px);
-            }
-        }
     }
 
     .collapsible-menu {
-        display: flex;
-        flex-direction: row;
-        right: 0;
-        gap: 5px;
         display: none;
-
         @include tablet {
             display: block;
+            cursor: pointer;
+            i {
+                font-size: 24px;
+                color: gray;
+            }
         }
-
-        i {
-            color: gray;
-            letter-spacing: 1px;
-        }
-    }
-
-    .closingSidenav {
-        animation: slideUp 0.5s ease forwards;
     }
 }

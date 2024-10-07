@@ -7,9 +7,14 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import logo from "../../assets/nami-logo.jpg";
 import { Badge } from "@mui/material";
+import { AppContext } from "../../Context/ApiContext";
+import { useContext } from "react";
 
 const Sidebar = () => {
 	const [loading, setLoading] = useState(true);
+	const {isToggled} = useContext(AppContext)
+
+	console.log(isToggled)
 
 	useEffect(() => {
 		// Simulate data fetching or processing delay
@@ -52,8 +57,12 @@ const Sidebar = () => {
 										<Skeleton width={160} height={20} />
 									) : (
 										<>
-											{item?.icon}
-											<span>{item.title}</span>
+
+											{
+												isToggled ?<> <span>{item.icon}</span> <span>{item.title}</span></>  : <><span>{item.icon}</span>  <span>{item.title}</span></>
+											}
+											
+											
 										</>
 									)}
 								</motion.div>

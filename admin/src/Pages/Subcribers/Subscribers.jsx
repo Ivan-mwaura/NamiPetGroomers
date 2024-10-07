@@ -165,19 +165,6 @@ const Subscribers = () => {
       <div className="AccomodationsContainer DisplayFlex">
         <div className="AccomodationsTop DisplayFlex">
           <div className="Filter DisplayFlex">
-            <CustomTextField
-              id="outlined-basic"
-              placeholder="Search"
-              inputProps={{ "aria-label": "search" }}
-              adornmentPosition="start"
-              adornmentContent={<i className="fas fa-search"></i>}
-              sx={{ width: "100%", padding: "0" }}
-            />
-            <CustomTextField
-              id="outlined-basic"
-              type="number"
-              sx={{ width: "100%", padding: "0" }}
-            />
           </div>
         </div>
         <div className="AccomodationsBottom">

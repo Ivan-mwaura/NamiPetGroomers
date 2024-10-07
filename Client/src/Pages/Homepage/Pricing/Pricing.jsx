@@ -28,9 +28,9 @@ const Pricing = () => {
       <div>
         <h1 className="pricing-heading">Choose Your Membership Plan</h1>
       </div>
-      <div className="pricing">
+      <div className="pricing" >
         {pricingData.map((pricing, index) => (
-          <div className="card" key={index}>
+          <div className="card" key={index} style={{position: "relative"}}>
             <img src={pricingImg} alt={pricing.pricingName} />
             <h3>{pricing.pricingName}</h3>
             <h2>{pricing.pricingPrice} <span>/mo</span></h2>
@@ -39,7 +39,7 @@ const Pricing = () => {
                 <li key={idx}>{benefit}</li>
               ))}
             </ul>
-            <button onClick={() => handleJoinNow(pricing._id)}>JOIN NOW</button>
+            <button onClick={() => handleJoinNow(pricing._id)} style={{position: "absolute", bottom: "20px", right: "120px"}}>JOIN NOW</button>
           </div>
         ))}
       </div>

@@ -31,7 +31,10 @@ const ApiProvider = ({ children }) => {
 		token: null,
 		isLoggedIn: true,
 		userData: JSON.parse(localStorage.getItem("userData")) || {},
+		
 	});
+
+	const [isToggled, setIsToggled] = useState(false);
 
 	const endpoints = useMemo(
 		() => [
@@ -125,7 +128,7 @@ const ApiProvider = ({ children }) => {
 	//console.log("Data:", data.birdproducts, data.catproducts, data.dogproducts, data.horseproducts, data.FishAndAcquaticAnimalsProducts);
 
 	return (
-		<AppContext.Provider value={{ ...data, setData, setUserData }}>
+		<AppContext.Provider value={{ ...data, setData, setUserData, isToggled, setIsToggled }}>
 			{children}
 		</AppContext.Provider>
 	);

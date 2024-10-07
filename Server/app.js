@@ -41,7 +41,6 @@ app.use('/admin', express.static(path.join(__dirname, '../admin/dist'), {
     }
 }));
 
-
 // All other requests should return the Client or Admin index.html file
 app.get('/admin/*', (req, res) => {
     console.log('Serving Admin index.html');
@@ -58,7 +57,7 @@ const port = process.env.PORT || 5000;
 const start = async () => {
     try {
         await connectDB(process.env.MONGO_URI);
-        console.log("Connection to Database successful")
+        console.log("Connection to Database successful");
         app.listen(port, () => {
             console.log(`Server is running on port ${port}`);
         });

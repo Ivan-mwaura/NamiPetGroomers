@@ -5,9 +5,11 @@ import CustomButton from "../../Utils/CustomButton";
 import { useHistory } from "react-router-use-history";
 import { toast } from "react-toastify";
 import axios from "axios"; // Import axios
+import {useNavigate} from 'react-router-dom';
 
 const ServiceNew = () => {
 	const history = useHistory();
+	const navigate = useNavigate();
 
 	const [formData, setFormData] = useState({
 		title: "",
@@ -41,7 +43,7 @@ const ServiceNew = () => {
 				console.log("Submitting service data:", serviceData); // Debugging statement
 				await axios.post("http://localhost:5000/api/v1/services", serviceData);
 				toast.success("Service created successfully");
-				history.push("/Services");
+				navigate('admin/Services');
 			} catch (error) {
 				console.error("Error creating service:", error);
 			}

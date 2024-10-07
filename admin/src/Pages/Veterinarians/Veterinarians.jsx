@@ -101,7 +101,7 @@ const Veterinarians = () => {
 							text="Add"
 							customStyles={{ backgroundColor: "var(--green)" }}
 							onClick={() => {
-								window.location.href = "veterinarian/new";
+								window.location.href = "veterinarian/new ";
 							}}
 						/>
 					</div>

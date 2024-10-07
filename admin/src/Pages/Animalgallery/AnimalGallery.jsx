@@ -70,19 +70,7 @@ const AnimalGallery = () => {
 			<div className="AnimalGalleryContainer DisplayFlex">
 				<div className="AnimalGalleryTop DisplayFlex">
 					<div className="Filter DisplayFlex">
-						<CustomTextField
-							id="outlined-basic"
-							placeholder="Search"
-							inputProps={{ "aria-label": "search" }}
-							adornmentPosition="start"
-							adornmentContent={<i className="fas fa-search"></i>}
-							sx={{ width: "100%", padding: "0" }}
-						/>
-						<CustomTextField
-							id="outlined-basic"
-							type="number"
-							sx={{ width: "100%", padding: "0" }}
-						/>
+
 					</div>
 					<div className="Edit">
 						<CustomButton
@@ -90,7 +78,7 @@ const AnimalGallery = () => {
 							text="Add"
 							customStyles={{ backgroundColor: "var(--green)" }}
 							onClick={() => {
-								window.location.href = "/animalGallery/new";
+								window.location.href = "animalGallery/new";
 							}}
 						/>
 					</div>

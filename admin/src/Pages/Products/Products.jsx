@@ -81,14 +81,7 @@ const Products = () => {
 			<div className="AwardsContainer DisplayFlex">
 				<div className="AwardsTop DisplayFlex">
 					<div className="Filter DisplayFlex">
-						<CustomTextField
-							id="outlined-basic"
-							placeholder="Search"
-							inputProps={{ "aria-label": "search" }}
-							adornmentPosition="start"
-							adornmentContent={<i className="fas fa-search"></i>}
-							sx={{ width: "100%", padding: "0" }}
-						/>
+
 						<FormControl sx={{ minWidth: 200, marginLeft: 2 }}>
 							<InputLabel id="animalType-select-label">Animal Type</InputLabel>
 							<Select
@@ -113,7 +106,7 @@ const Products = () => {
 							text="Add"
 							customStyles={{ backgroundColor: "var(--green)" }}
 							onClick={() => {
-								window.location.href = "/product/new";
+								window.location.href = "product/new";
 							}}
 						/>
 					</div>

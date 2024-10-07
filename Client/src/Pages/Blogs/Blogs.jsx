@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { motion } from 'framer-motion';
 import { FaExternalLinkAlt } from 'react-icons/fa';
-import BlogsData from './BlogsData'; // Import the blogs data
 import './Blogs.scss';
 import { AppContext } from '../../Components/Context/ApiContext';
 
@@ -12,11 +12,20 @@ const Blogs = () => {
   const { setBlog } = useContext(AppContext);
 
   useEffect(() => {
-    setBlogData(BlogsData); // Use the imported blogs data
+    const fetchBlogs = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/v1/getBlogs');
+        setBlogData(response.data.data); // Update the state with the fetched data
+      } catch (error) {
+        console.error('Error fetching blogs:', error);
+      }
+    };
+
+    fetchBlogs();
   }, []);
 
   const handleGetStarted = (blog) => {
-    setBlog(blog);
+    setBlog(blog); // Store the selected blog in context
     navigate('/blogDetails');
   };
 
@@ -34,7 +43,7 @@ const Blogs = () => {
             key={index} 
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: blog.id * 0.1 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
           >
             <div className="blog-image">
               <img src={blog.image} alt={blog.title} />

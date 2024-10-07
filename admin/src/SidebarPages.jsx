@@ -6,15 +6,9 @@ const Dashboard = lazy(() => import("./Pages/Dashboard/Dashboard"));
 const UserNew = lazy(() => import("./Pages/UserNew/UserNew"));
 const User = lazy(() => import("./Pages/User/User"));
 const Login = lazy(() => import("./Pages/Login/Login"));
-//const NotFound = lazy(() => import("./Pages/NotFound/NotFound"));
-//const Accomodation = lazy(() => import("./Pages/Accomodation/Accomodation"));
 const Veterinarians = lazy(() => import("./Pages/Veterinarians/Veterinarians"));
-const AccomodationNew = lazy(() =>
-	import("./Pages/VeterinarianNew/VeterinarianNew")
-);
+const AccomodationNew = lazy(() => import("./Pages/VeterinarianNew/VeterinarianNew"));
 const Services = lazy(() => import("./Pages/Services/Services"));
-//const Event = lazy(() => import("./Pages/Event/Event"));
-//const Reports = lazy(() => import("./Pages/Reports/Reports"));
 const Messages = lazy(() => import("./Pages/Messages/Messages"));
 const ServiceNew = lazy(() => import("./Pages/ServiceNew/ServiceNew"));
 const Payments = lazy(() => import("./Pages/Payments/Payments"));
@@ -50,99 +44,93 @@ const SidebarPages = () => {
 			<Suspense fallback={<LoadingFallback />}>
 				<Routes>
 					<Route
-						path="/"
-						element={loading ? <LoadingFallback /> : <Dashboard />}
-					/>
-					<Route
-						path="admin/users"
+						
+						path="*"
 						element={loading ? <LoadingFallback /> : <Users />}
 					/>
 					<Route
-						path="admin/user/new"
+						path="/admin/user/new"
 						element={loading ? <LoadingFallback /> : <UserNew />}
 					/>
 					<Route
-						path="admin/user/:id"
+						path="/admin/user/:id"
 						element={loading ? <LoadingFallback /> : <User />}
 					/>
 					<Route
-						path="admin/messages"
+						path="/admin/messages"
 						element={loading ? <LoadingFallback /> : <Messages />}
 					/>
 					<Route
-						path="admin/contactUsInquiries"
+						path="/admin/contactUsInquiries"
 						element={loading ? <LoadingFallback /> : <ContactUsInquiries />}
 					/>
-
 					<Route
-						path="admin/login"
+						path="/admin/login"
 						element={loading ? <LoadingFallback /> : <Login />}
 					/>
 					<Route
-						path="admin/Veterinarians"
+						path="/admin/Veterinarians"
 						element={loading ? <LoadingFallback /> : <Veterinarians />}
 					/>
 					<Route
-						path="admin/veterinarian/new"
+						path="/admin/veterinarian/new"
 						element={loading ? <LoadingFallback /> : <AccomodationNew />}
 					/>
 					<Route
-						path="admin/Services"
-						element={loading ? <LoadingFallback /> : <Services/>}
+						path="/admin/Services"
+						element={loading ? <LoadingFallback /> : <Services />}
 					/>
 					<Route
 						path="admin/service/new"
-						element={loading ? <LoadingFallback /> : <ServiceNew/>}
+						element={loading ? <LoadingFallback /> : <ServiceNew />}
 					/>
 					<Route
-						path="admin/payments"
+						path="/admin/payments"
 						element={loading ? <LoadingFallback /> : <Payments />}
 					/>
 					<Route
-						path="admin/blogs"
+						path="/admin/blogs"
 						element={loading ? <LoadingFallback /> : <Blogs />}
 					/>
 					<Route
-						path="admin/pricings"
+						path="/admin/pricings"
 						element={loading ? <LoadingFallback /> : <Pricings />}
 					/>
 					<Route
-						path="admin/pricing/new"
+						path="/admin/pricing/new"
 						element={loading ? <LoadingFallback /> : <PricingNew />}
-
 					/>
 					<Route
-						path="admin/users"
+						path="/admin/users"
 						element={loading ? <LoadingFallback /> : <Users />}
 					/>
 					<Route
-						path="admin/user/new"
+						path="/admin/user/new"
 						element={loading ? <LoadingFallback /> : <UserNew />}
 					/>
-
 					<Route
-						path="admin/Products"
+						path="/admin/Products"
 						element={loading ? <LoadingFallback /> : <Products />}
 					/>
 					<Route
-						path="admin/product/new"
+						path="/admin/product/new"
 						element={loading ? <LoadingFallback /> : <ProductNew />}
 					/>
 					<Route
-						path="admin/animalGallery"
-						element={loading ? <LoadingFallback /> : <AnimalGallery/>}
+						path="/admin/animalGallery"
+						element={loading ? <LoadingFallback /> : <AnimalGallery />}
 					/>
 					<Route
-						path="admin/animalGallery/new"
-						element={loading ? <LoadingFallback /> : <AnimalGalleryNew/>}
+						path="/admin/animalGallery/new"
+						element={loading ? <LoadingFallback /> : <AnimalGalleryNew />}
 					/>
 					<Route
-						path="admin/blog/new"
+						path="/admin/blog/new"
 						element={loading ? <LoadingFallback /> : <BlogNew />}
 					/>
 					<Route
-						path="admin/subscribers"
-						element={loading ? <LoadingFallback /> : <Subscribers/>}
+						path="/admin/subscribers"
+						element={loading ? <LoadingFallback /> : <Subscribers />}
 					/>
 				</Routes>
 			</Suspense>
@@ -151,19 +139,3 @@ const SidebarPages = () => {
 };
 
 export default SidebarPages;
-
-// // props validation
-
-// SidebarPages.propTypes = {
-// 	user: PropTypes.object,
-// 	users: PropTypes.array,
-// 	products: PropTypes.array,
-// 	getTimeLabel: PropTypes.func,
-// 	requests: PropTypes.array,
-// 	chats: PropTypes.array,
-// 	messages: PropTypes.array,
-// 	orders: PropTypes.array,
-// 	getCustomer: PropTypes.func,
-// 	getProduct: PropTypes.func,
-// 	earnings: PropTypes.array,
-// };

@@ -33,7 +33,7 @@ const CustomTableCell = styled(TableCell)`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 200px; // Adjust the width as needed
+  max-width: 200px;
 `;
 
 const CustomTableRow = styled(TableRow)`
@@ -126,7 +126,28 @@ const CustomTable = ({
     setUpdatedData(updatedRow);
   };
 
-  const getApiEndpoints = (animalType, context) => {
+  const getApiEndpoints = (animalType, context, role) => {
+    if (context === "users") {
+      return role === "admin"
+        ? {
+            delete: `http://localhost:5000/api/v1/deleteAdminLogin/`,
+            update: `http://localhost:5000/api/v1/updateAdminLogin/`,
+          }
+        : {
+            delete: `http://localhost:5000/api/v1/deleteLogin/`,
+            update: `http://localhost:5000/api/v1/updateLogin/`,
+          };
+    }
+
+    {/*if (context === "products") {
+      return {
+        update: `http://localhost:5000/api/v1/updateProduct/`, // Adjust endpoint if necessary
+        delete: `http://localhost:5000/api/v1/deleteProduct/`, // Adjust endpoint if necessary
+      };
+    }*/}
+
+
+
     if (context === "animalGallery") {
       return {
         update: `http://localhost:5000/api/v1/updateAnimalGrooming/`,
@@ -134,7 +155,11 @@ const CustomTable = ({
       };
     }
 
-    switch (animalType, context) {
+    if(context === "products") {
+      
+      
+    switch (animalType) {
+
       case "Dog":
         return {
           update: `http://localhost:5000/api/v1/updateDogProduct/`,
@@ -172,7 +197,6 @@ const CustomTable = ({
         };
       case "messages":
         return {
-          //update: `http://localhost:5000/api/v1/updateMessage/`,
           delete: `http://localhost:5000/api/v1/deleteMessage/`,
         };
       case "blogs":
@@ -193,7 +217,8 @@ const CustomTable = ({
       default:
         return { update: "", delete: "" };
     }
-  };
+  }
+  }
 
   const handleUpdateClick = async (id, animalType, context) => {
     const { update } = getApiEndpoints(animalType, context);
@@ -213,8 +238,8 @@ const CustomTable = ({
   };
 
   const handleDeleteClick = async (id, animalType, context) => {
+    console.log("animalType", animalType);
     const { delete: deleteEndpoint } = getApiEndpoints(animalType, context);
-    console.log(deleteEndpoint, context);
     try {
       const response = await axios.delete(`${deleteEndpoint}${id}`);
       if (response.status === 200) {
@@ -263,12 +288,8 @@ const CustomTable = ({
             <TableRow>
               <CustomTableCell padding="checkbox">
                 <Checkbox
-                  indeterminate={
-                    selected.length > 0 && selected.length < updatedData.length
-                  }
-                  checked={
-                    updatedData.length > 0 && selected.length === updatedData.length
-                  }
+                  indeterminate={selected.length > 0 && selected.length < updatedData.length}
+                  checked={updatedData.length > 0 && selected.length === updatedData.length}
                   onChange={handleSelectAll}
                 />
               </CustomTableCell>
@@ -384,8 +405,8 @@ const CustomTable = ({
           <CustomButton
             size="small"
             text="Next"
-            onClick={handleNextPage}
             customStyles={{ backgroundColor: "var(--green)" }}
+            onClick={handleNextPage}
             disabled={currentPage === totalPages}
           />
         </Box>
@@ -404,6 +425,6 @@ CustomTable.propTypes = {
   usersPerPage: PropTypes.number.isRequired,
   handleNextPage: PropTypes.func.isRequired,
   handlePreviousPage: PropTypes.func.isRequired,
-  context: PropTypes.string.isRequired, // Add context to prop types
-  onReplyClick: PropTypes.func, // Add this prop for handling reply click
+  context: PropTypes.string.isRequired,
+  onReplyClick: PropTypes.func,
 };

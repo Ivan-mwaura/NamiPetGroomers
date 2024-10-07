@@ -70,39 +70,39 @@ const MainRoutes = () => {
               
               {/* Protected Routes */}
               <Route path="/" element={
-                <ProtectedRoute>
+                
                   <Homepage />
-                </ProtectedRoute>
+                
               } />
               <Route path="/Petshop/PetCategorySection" element={
-                <ProtectedRoute>
+                
                   <PetCategorySection />
-                </ProtectedRoute>
+                
               } />
               <Route path="/ContactUs" element={
-                <ProtectedRoute>
+                
                   <ContactUs />
-                </ProtectedRoute>
+                
               } />
               <Route path="/Services" element={
-                <ProtectedRoute>
+                
                   <Services />
-                </ProtectedRoute>
+                
               } />
               <Route path="/Veterinarians" element={
-                <ProtectedRoute>
+               
                   <Veterinarians />
-                </ProtectedRoute>
+                
               } />
               <Route path="/Pricing" element={
-                <ProtectedRoute>
+                
                   <Pricing />
-                </ProtectedRoute>
+                
               } />
               <Route path="/Blogs" element={
-                <ProtectedRoute>
+                
                   <Blogs />
-                </ProtectedRoute>
+                
               } />
               <Route path="/AddToCart" element={
                 <ProtectedRoute>
@@ -115,14 +115,14 @@ const MainRoutes = () => {
                 </ProtectedRoute>
               } />
               <Route path="/AboutUs" element={
-                <ProtectedRoute>
+                
                   <AboutUs />
-                </ProtectedRoute>
+                
               } />
               <Route path="/Gallery" element={
-                <ProtectedRoute>
+               
                   <Gallery />
-                </ProtectedRoute>
+                
               } />
               <Route path="/subscription/:id" element={
                 <ProtectedRoute>
