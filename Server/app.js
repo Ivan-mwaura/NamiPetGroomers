@@ -14,7 +14,6 @@ const paymentRoutes = require('./Routes/PaymentRoutes');
 const productsRoutes = require('./Routes/ProductsRoutes');
 const connectDB = require('./db/connect');
 const populateDB = require('./PopulationData/populateDB');
-
 app.use('/api/v1', MainRoutes);
 app.use('/api/v1', productsRoutes);
 app.use('/api/v1', paymentRoutes);
