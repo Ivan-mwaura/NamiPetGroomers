@@ -14,6 +14,7 @@ const paymentRoutes = require('./Routes/PaymentRoutes');
 const productsRoutes = require('./Routes/ProductsRoutes');
 const connectDB = require('./db/connect');
 const populateDB = require('./PopulationData/populateDB');
+
 app.use('/api/v1', MainRoutes);
 app.use('/api/v1', productsRoutes);
 app.use('/api/v1', paymentRoutes);
@@ -28,7 +29,14 @@ app.get('/api/v1/populate-database', async (req, res) => {
 });
 
 // Serve the Client build folder
-app.use('/', express.static(path.join(__dirname, '../Client/dist')));
+app.use('/', express.static(path.join(__dirname, '../Client/dist'), {
+    setHeaders: (res, path) => {
+        if (path.endsWith('.js')) {
+            res.setHeader('Content-Type', 'application/javascript');
+        }
+    }
+}));
+    
 
 // Serve the Admin build folder with the correct MIME type for JS files
 app.use('/admin', express.static(path.join(__dirname, '../admin/dist'), {

@@ -9,6 +9,7 @@ const ApiContext = ({children}) => {
 	const [selectedPetSubcategory, setSelectedPetSubcategory] = useState('');
 	const [cart, setCart] = useState([]);
 	const [blog, setBlog] = useState([]);
+	const [subscriptionId, setSubscriptionId] = useState('');
 
 	const addToCart = (product) => {
 		const existingCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -29,6 +30,8 @@ const ApiContext = ({children}) => {
 			addToCart,
 			blog,
 			setBlog,
+			subscriptionId,
+			setSubscriptionId,
 		}}	
 		>
 			{children}

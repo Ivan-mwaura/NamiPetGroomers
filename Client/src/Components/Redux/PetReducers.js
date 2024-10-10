@@ -4,6 +4,8 @@ const initialState = {
     selectedPet: "Dog",
     selectedPetCategory: null,
     selectedPetSubcategory: null,
+    subscriptionId: "",
+
   };
   
   const petReducers = (state = initialState, action) => {
@@ -22,6 +24,11 @@ const initialState = {
         return {
           ...state,
           selectedPetSubcategory: action.payload,
+        };
+      case 'SET_SUBSCRIPTION_ID':
+        return {
+          ...state,
+          subscriptionId: action.payload,
         };
       default:
         return state;

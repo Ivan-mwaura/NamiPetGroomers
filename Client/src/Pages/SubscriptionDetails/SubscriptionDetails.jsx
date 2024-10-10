@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 import {
   Dialog,
   DialogActions,
@@ -15,9 +14,9 @@ import {
 import './SubscriptionDetails.scss';
 import { toast } from 'react-toastify';
 import image2 from "../../assets/images/pricing-2.jpg";
+import {useSelector} from "react-redux";
 
 const SubscriptionDetails = () => {
-  const { id } = useParams();
   const [subscription, setSubscription] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState('');
@@ -26,11 +25,14 @@ const SubscriptionDetails = () => {
     phoneNumber: '',
     email: ''
   });
+  const subscriptionId = useSelector((state) => state.pet.subscriptionId);
+
+  console.log('subscriptionId:', subscriptionId);
 
   useEffect(() => {
     const fetchSubscriptionDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/v1/getPricing/${id}`);
+        const response = await axios.get(`http://localhost:5000/api/v1/getPricing/${subscriptionId}`);
         setSubscription(response.data.data);
       } catch (error) {
         console.error('Error fetching subscription details:', error);
@@ -38,7 +40,7 @@ const SubscriptionDetails = () => {
     };
 
     fetchSubscriptionDetails();
-  }, [id]);
+  }, [ subscriptionId ]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;

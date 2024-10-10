@@ -1,14 +1,22 @@
-import { useState, useContext} from "react";
+import { useState, useContext, useEffect } from "react";
 import "./AnimalGallery.css";
-import CustomTextField from "../../Utils/CustomTextField";
 import CustomButton from "../../Utils/CustomButton";
 import CustomTable from "../../Components/CustomTable";
 import { AppContext } from "../../Context/ApiContext";
+import CircularProgress from "@mui/material/CircularProgress"; // Importing CircularProgress for the loading spinner
 
 const AnimalGallery = () => {
+	const [loading, setLoading] = useState(true); // Loading state to control spinner display
 	const [currentPage, setCurrentPage] = useState(1);
 	const eventsPerPage = 7;
 	const { animalGallery } = useContext(AppContext);
+
+	useEffect(() => {
+		// Simulating data fetch delay for demonstration purposes
+		if (animalGallery.data) {
+			setLoading(false); // Set loading to false once data is available
+		}
+	}, [animalGallery]);
 
 	const handleNextPage = () => {
 		setCurrentPage((prevPage) => prevPage + 1);
@@ -67,35 +75,40 @@ const AnimalGallery = () => {
 				<span>Dashboard</span> <i className="fas fa-angle-right"></i>{" "}
 				<span>AnimalGallery</span>
 			</div>
-			<div className="AnimalGalleryContainer DisplayFlex">
-				<div className="AnimalGalleryTop DisplayFlex">
-					<div className="Filter DisplayFlex">
-
+			{loading ? ( // Display the loading spinner while data is being fetched
+				<div className="loading-indicator DisplayFlex">
+					<CircularProgress />
+					<p>Loading Animal Gallery, please wait...</p>
+				</div>
+			) : (
+				<div className="AnimalGalleryContainer DisplayFlex">
+					<div className="AnimalGalleryTop DisplayFlex">
+						<div className="Filter DisplayFlex"></div>
+						<div className="Edit">
+							<CustomButton
+								size="small"
+								text="Add"
+								customStyles={{ backgroundColor: "var(--green)" }}
+								onClick={() => {
+									window.location.href = "animalGallery/new";
+								}}
+							/>
+						</div>
 					</div>
-					<div className="Edit">
-						<CustomButton
-							size="small"
-							text="Add"
-							customStyles={{ backgroundColor: "var(--green)" }}
-							onClick={() => {
-								window.location.href = "animalGallery/new";
-							}}
+					<div className="AnimalGalleryBottom">
+						<CustomTable
+							data={currentPageData}
+							columns={columns}
+							usersPerPage={eventsPerPage}
+							currentPage={currentPage}
+							totalItems={animalGallery.data?.length}
+							handleNextPage={handleNextPage}
+							handlePreviousPage={handlePreviousPage}
+							context="animalGallery" // Pass the context
 						/>
 					</div>
 				</div>
-				<div className="AnimalGalleryBottom">
-					<CustomTable
-						data={currentPageData}
-						columns={columns}
-						usersPerPage={eventsPerPage}
-						currentPage={currentPage}
-						totalItems={animalGallery.data?.length}
-						handleNextPage={handleNextPage}
-						handlePreviousPage={handlePreviousPage}		
-						context="animalGallery" // Pass the context
-					/>
-				</div>
-			</div>
+			)}
 		</div>
 	);
 };

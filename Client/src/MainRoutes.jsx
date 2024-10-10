@@ -1,4 +1,4 @@
-import React, { lazy, useState, useEffect, Suspense } from "react";
+import  { lazy, useState, useEffect, Suspense } from "react";
 import { Route, BrowserRouter as Router, Routes, useLocation } from "react-router-dom";
 import { ColorRing } from "react-loader-spinner";
 import ErrorBoundary from "./Utils/ErrorBoundary";
@@ -74,7 +74,7 @@ const MainRoutes = () => {
                   <Homepage />
                 
               } />
-              <Route path="/Petshop/PetCategorySection" element={
+              <Route path="/petCategorySection" element={
                 
                   <PetCategorySection />
                 
@@ -124,7 +124,7 @@ const MainRoutes = () => {
                   <Gallery />
                 
               } />
-              <Route path="/subscription/:id" element={
+              <Route path="/subscription" element={
                 <ProtectedRoute>
                   <SubscriptionDetails />
                 </ProtectedRoute>

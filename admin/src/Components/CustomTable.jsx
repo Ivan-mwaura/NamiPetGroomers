@@ -138,52 +138,31 @@ const CustomTable = ({
             update: `http://localhost:5000/api/v1/updateLogin/`,
           };
     }
-
-    {/*if (context === "products") {
-      return {
-        update: `http://localhost:5000/api/v1/updateProduct/`, // Adjust endpoint if necessary
-        delete: `http://localhost:5000/api/v1/deleteProduct/`, // Adjust endpoint if necessary
-      };
-    }*/}
-
-
-
-    if (context === "animalGallery") {
-      return {
-        update: `http://localhost:5000/api/v1/updateAnimalGrooming/`,
-        delete: `http://localhost:5000/api/v1/deleteAnimalGrooming/`,
-      };
-    }
-
-    if(context === "products") {
-      
-      
-    switch (animalType) {
-
-      case "Dog":
+  
+    // Fixed the switch statement logic to check the context value properly
+    switch (context) {
+      case "subscribers":
         return {
-          update: `http://localhost:5000/api/v1/updateDogProduct/`,
-          delete: `http://localhost:5000/api/v1/deleteDogProduct/`,
+          update: `http://localhost:5000/api/v1/updateSubscriber/`,
+          delete: `http://localhost:5000/api/v1/deleteSubscriber/`,
         };
-      case "Cat":
+      case "messages":
         return {
-          update: `http://localhost:5000/api/v1/updateCatProduct/`,
-          delete: `http://localhost:5000/api/v1/deleteCatProduct/`,
+          delete: `http://localhost:5000/api/v1/deleteMessage/`,
         };
-      case "Birds":
+      case "contactUsInquiries":
         return {
-          update: `http://localhost:5000/api/v1/updateBirdProduct/`,
-          delete: `http://localhost:5000/api/v1/deleteBirdProduct/`,
+          delete: `http://localhost:5000/api/v1/deleteContactUsInquiry/`,
         };
-      case "Horse":
+      case "blogs":
         return {
-          update: `http://localhost:5000/api/v1/updateHorseProduct/`,
-          delete: `http://localhost:5000/api/v1/deleteHorseProduct/`,
+          update: `http://localhost:5000/api/v1/updateBlog/`,
+          delete: `http://localhost:5000/api/v1/deleteBlog/`,
         };
-      case "FishAndAquaticPets":
+      case "pricings":
         return {
-          update: `http://localhost:5000/api/v1/updateFishAndAquaticAnimalsProduct/`,
-          delete: `http://localhost:5000/api/v1/deleteFishAndAquaticAnimalsProduct/`,
+          update: `http://localhost:5000/api/v1/updatePricing/`,
+          delete: `http://localhost:5000/api/v1/deletePricing/`,
         };
       case "services":
         return {
@@ -195,30 +174,41 @@ const CustomTable = ({
           update: `http://localhost:5000/api/v1/updateVeterinarian/`,
           delete: `http://localhost:5000/api/v1/deleteVeterinarian/`,
         };
-      case "messages":
-        return {
-          delete: `http://localhost:5000/api/v1/deleteMessage/`,
-        };
-      case "blogs":
-        return {
-          update: `http://localhost:5000/api/v1/updateBlog/`,
-          delete: `http://localhost:5000/api/v1/deleteBlog/`,
-        };
-      case "subscribers":
-        return {
-          update: `http://localhost:5000/api/v1/updateSubscriber/`,
-          delete: `http://localhost:5000/api/v1/deleteSubscriber/`,
-        };
-      case "pricings":
-        return {
-          update: `http://localhost:5000/api/v1/updatePricing/`,
-          delete: `http://localhost:5000/api/v1/deletePricing/`,
-        };
+      case "products":
+        switch (animalType) {
+          case "Dog":
+            return {
+              update: `http://localhost:5000/api/v1/updateDogProduct/`,
+              delete: `http://localhost:5000/api/v1/deleteDogProduct/`,
+            };
+          case "Cat":
+            return {
+              update: `http://localhost:5000/api/v1/updateCatProduct/`,
+              delete: `http://localhost:5000/api/v1/deleteCatProduct/`,
+            };
+          case "Bird":
+            return {
+              update: `http://localhost:5000/api/v1/updateBirdProduct/`,
+              delete: `http://localhost:5000/api/v1/deleteBirdProduct/`,
+            };
+          case "Horse":
+            return {
+              update: `http://localhost:5000/api/v1/updateHorseProduct/`,
+              delete: `http://localhost:5000/api/v1/deleteHorseProduct/`,
+            };
+          case "FishAndAquaticPets":
+            return {
+              update: `http://localhost:5000/api/v1/updateFishAndAquaticAnimalsProduct/`,
+              delete: `http://localhost:5000/api/v1/deleteFishAndAquaticAnimalsProduct/`,
+            };
+          default:
+            return { update: "", delete: "" };
+        }
       default:
         return { update: "", delete: "" };
     }
-  }
-  }
+  };
+  
 
   const handleUpdateClick = async (id, animalType, context) => {
     const { update } = getApiEndpoints(animalType, context);

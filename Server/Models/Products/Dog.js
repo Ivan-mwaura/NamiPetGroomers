@@ -5,19 +5,19 @@ const dogProductsSchema = new mongoose.Schema({
 
     animalType: {
         type: String,
-        required: true
+        //required: true
     },
     productName: {
         type: String,
-        required: true
+        //required: true
     },
     productCategory: {
         type: String,
-        required: true
+        //required: true
     },
     productSubCategory: {
         type: String,
-        required: true
+        //required: true
     },
     productDescription: {
         type: String,
@@ -25,19 +25,19 @@ const dogProductsSchema = new mongoose.Schema({
     },
     productPrice: {
         type: String,
-        required: true
+        //required: true
     },
     productImage: {
         type: String,
-        required: true
+        //required: true
     },
     productRating: {
         type: Number,
-        required: true
+        //required: true
     },
     productStock: {
         type: Number,
-        required: true
+        //required: true
     },
 });
 

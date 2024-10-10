@@ -690,14 +690,21 @@ const addAnimalGrooming = async (req, res) => {
     try {
         upload.fields([{ name: 'beforeImage', maxCount: 1 }, { name: 'afterImage', maxCount: 1 }])(req, res, async (err) => {
             if (err) {
-                console.log(err);
+                console.error('File upload error:', err);
                 return res.status(500).json({ message: 'Upload error', error: err });
             }
 
             const { animalName, animalBreed, animalType } = req.body;
+
+            // Check if req.files is defined and has the correct fields
+            if (!req.files || !req.files['beforeImage'] || !req.files['afterImage']) {
+                return res.status(400).json({ message: 'Both before and after images are required' });
+            }
+
             const beforeImage = req.files['beforeImage'][0];
             const afterImage = req.files['afterImage'][0];
 
+            // Check if both images exist
             if (!beforeImage || !afterImage) {
                 return res.status(400).json({ message: 'Both before and after images are required' });
             }
@@ -705,33 +712,43 @@ const addAnimalGrooming = async (req, res) => {
             const beforeImagePath = beforeImage.path;
             const afterImagePath = afterImage.path;
 
-            const [beforeResult, afterResult] = await Promise.all([
-                cloudinary.uploader.upload(beforeImagePath, { resource_type: 'image' }),
-                cloudinary.uploader.upload(afterImagePath, { resource_type: 'image' })
-            ]);
+            try {
+                const [beforeResult, afterResult] = await Promise.all([
+                    cloudinary.uploader.upload(beforeImagePath, { resource_type: 'image' }),
+                    cloudinary.uploader.upload(afterImagePath, { resource_type: 'image' })
+                ]);
 
-            const animalGrooming = new AnimalGroomingModel({
-                animalName,
-                animalBreed,
-                animalType,
-                groomingImages: {
-                    before: beforeResult.secure_url,
-                    after: afterResult.secure_url,
-                }
-            });
+                const animalGrooming = new AnimalGroomingModel({
+                    animalName,
+                    animalBreed,
+                    animalType,
+                    groomingImages: {
+                        before: beforeResult.secure_url,
+                        after: afterResult.secure_url,
+                    }
+                });
 
-            const result = await animalGrooming.save();
+                const result = await animalGrooming.save();
 
-            fs.unlink(beforeImagePath, (err) => { if (err) console.log(err); });
-            fs.unlink(afterImagePath, (err) => { if (err) console.log(err); });
+                fs.unlink(beforeImagePath, (unlinkErr) => {
+                    if (unlinkErr) console.error('Error deleting before image:', unlinkErr);
+                });
+                fs.unlink(afterImagePath, (unlinkErr) => {
+                    if (unlinkErr) console.error('Error deleting after image:', unlinkErr);
+                });
 
-            res.status(200).json({ message: 'Animal Grooming added successfully', result });
+                res.status(200).json({ message: 'Animal Grooming added successfully', result });
+            } catch (uploadError) {
+                console.error('Cloudinary upload error:', uploadError);
+                return res.status(500).json({ message: 'Error uploading images to Cloudinary', error: uploadError });
+            }
         });
     } catch (error) {
-        console.log(error);
+        console.error('Server error:', error);
         res.status(500).json({ message: 'Server error', error });
     }
 };
+
 
 const getAnimalGroomings = (req, res) => {
     try {

@@ -26,16 +26,18 @@ const BlogsData = require('./BlogsData');
 
 const populateDB = async () => {
   try {
-   await blogsModel.deleteMany({}); // Clear existing data
+   await animalGroomingModel.deleteMany({}); // Clear existing data
 
-   for (const product of BlogsData) {
-    const newProduct = new blogsModel({
-      title: product.title,
-      author: product.author,
-      datePosted: product.datePosted,
-      image: product.image,
-      content: product.content
+   for (const product of AnimalGroomingData) {
+    const newProduct = new animalGroomingModel({
 
+      animalName: product.animalName,
+      animalBreed: product.animalBreed,
+      animalType: product.animalType,
+      groomingImages: {
+        before: product.groomingImages.before,
+        after: product.groomingImages.after
+      }
     });
 
       await newProduct.save();

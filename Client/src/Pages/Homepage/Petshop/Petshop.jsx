@@ -23,7 +23,7 @@ const Petshop = () => {
 
   const handlePetSelect = (pet) => {
     dispatch(setSelectedPet(pet)); // Dispatch the action
-    window.location.href = '/Petshop/PetCategorySection';
+    window.location.href = '/petCategorySection'; // Redirect to pet category section
     localStorage.setItem('selectedPet', pet);
   }
 

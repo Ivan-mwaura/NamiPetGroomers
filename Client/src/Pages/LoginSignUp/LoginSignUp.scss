@@ -206,23 +206,63 @@
         background-color: #ececec;
       }
 
-      &.facebook-btn {
-        color: #3b5998;
-      }
 
-      &.google-btn {
-        color: #db4437;
-      }
-
-      &.apple-btn {
-        color: #333;
-      }
     }
   }
 }
 
+.explore-more {
+  margin-top: 20px; // Provides some space above the message
+  text-align: center; // Centers the text for better visual alignment
+  font-size: 14px; // Adjusts the font size for readability
+  color: #333; // Sets a standard text color that matches the theme
+
+  a {
+    color: #007bff; // Colors the link to match your primary theme color
+    text-decoration: none; // Removes underline from links by default
+
+    &:hover {
+      text-decoration: underline; // Adds underline on hover for better user interaction feedback
+      color: darken(#007bff, 10%); // Darkens the link color slightly on hover
+    }
+  }
+}
+
+// These are existing media queries, assuming you want the message to be responsive
+@include laptop {
+  .explore-more {
+    font-size: 16px; // Slightly larger font on larger screens
+  }
+}
+
+@include pad {
+  .explore-more {
+    font-size: 15px; // Adjusts the font size for pad-sized devices
+  }
+}
+
+@include chromebook {
+  .explore-more {
+    font-size: 14px; // Keeps font size smaller on chromebook-sized devices
+  }
+}
+
+@include tablet {
+  .explore-more {
+    font-size: 14px; // Appropriate font size for tablet screens
+  }
+}
+
+@include mobile {
+  .explore-more {
+    font-size: 13px; // Smaller font size for mobile screens for space efficiency
+  }
+}
+
+
 .login-signup-right {
   flex: 1;
+  object-fit: cover;
   background: url('https://thumbs.dreamstime.com/z/green-dog-paw-print-made-heart-vector-illustration-background-76099313.jpg') no-repeat center center/cover;
 
   @include chromebook {

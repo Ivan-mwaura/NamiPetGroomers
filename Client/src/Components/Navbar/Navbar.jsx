@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./Navbar.scss";
 import logo from '../../assets/images/nami-logo.jpg';
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaShoppingCart } from 'react-icons/fa';
 
 const Navbar = () => {
-    const [openMenu, setOpenMenu] = useState(false);
-    const [route, setRoute] = useState(null);
+    const [isOpen, setIsOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userName, setUserName] = useState("");
     const [userInitial, setUserInitial] = useState("");
-    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem("UserToken");
@@ -20,92 +17,70 @@ const Navbar = () => {
         if (token) {
             setIsAuthenticated(true);
         }
-
         if (userEmail) {
-            const nameFromEmail = userEmail.split('@')[0];
-            setUserName(nameFromEmail);
-            setUserInitial(nameFromEmail.charAt(0).toUpperCase());
+            const initial = userEmail.charAt(0).toUpperCase();
+            setUserInitial(initial);
+            setUserName(userEmail.split('@')[0]);
         }
     }, []);
 
-    const handleRouteTo = (route) => {
-        setRoute(route);
-    };
-
-    useEffect(() => {
-        if (route) {
-           window.location.href = route;
-        }
-    }, [route]);
-
-    const handleRouteToLogin = (route) => {
+    const handleLogOut = () => {
         localStorage.clear();
-        if (isAuthenticated) {
-            toast("You are already logged in");
-        } else {
-            setRoute(route);
-        }
-    };
-
-    const handleRouteToLogOut = (route) => {
-        if (isAuthenticated) {
-            localStorage.clear();
-            setIsAuthenticated(false);
-            setUserName("");
-            setUserInitial("");
-            toast("You have successfully logged out");
-            setRoute(route);
-        } else {
-            toast("You are not logged in");
-        }
+        setIsAuthenticated(false);
+        setUserName("");
+        setUserInitial("");
+        toast("You have successfully logged out");
+        window.location.href = "/login";
     };
 
     const handleClick = () => {
-        setOpenMenu(!openMenu);
+        setIsOpen(prevState => !prevState);
     };
 
     return (
-        <div className="navbar">
-            <div className="navbar-logo" onClick={() => handleRouteTo("/")}>
-                <img src={logo} alt="logo" />
+        <nav className="navbar">
+            <div className="navbar-logo" onClick={() => window.location.href = "/"}>
+                <img src={logo} alt="Nami Petgroomers logo" />
                 <h1>Nami Petgroomers</h1>
             </div>
 
-            <div className={`navbar-links ${openMenu ? "open" : ""}`}>
+            <div className={`navbar-links ${isOpen ? "open" : ""}`}>
                 <ul>
-                    <li onClick={() => handleRouteTo("/")}>HOME</li>
-                    <li onClick={() => handleRouteTo("/AboutUs")}>ABOUT US</li>
-                    <li onClick={() => handleRouteTo("/Veterinarians")}>VETERINARIAN</li>
-                    <li onClick={() => handleRouteTo("/Services")}>SERVICES</li>
-                    <li onClick={() => handleRouteTo("/Gallery")}>GALLERY</li>
-                    <li onClick={() => handleRouteTo("/Pricing")}>PRICING</li>
-                    <li onClick={() => handleRouteTo("/Blogs")}>BLOG</li>
-                    <li onClick={() => handleRouteTo("/ContactUs")}>CONTACT</li>
-                    <li>
-                        <FaShoppingCart size={24} onClick={() => handleRouteTo("/CustomerCart")} />
+                    <li className="essential" onClick={() => window.location.href = "/"}>HOME</li>
+                    <li className="essential" onClick={() => window.location.href = "/AboutUs"}>ABOUT US</li>
+                    <li className="important" onClick={() => window.location.href = "/Services"}>SERVICES</li>
+                    <li className="critical" onClick={() => window.location.href = "/ContactUs"}>CONTACT</li>
+                    <li className="important" onClick={() => window.location.href = "/Gallery"}>GALLERY</li>
+                    <li onClick={() => window.location.href = "/Blogs"}>BLOGS</li>
+                    <li onClick={() => window.location.href = "/Pricing"}>PRICING</li>
+                    <li onClick={() => window.location.href = "/Veterinarians"}>VETERINARIANS</li>
+                    <li className="critical">
+                        <FaShoppingCart onClick={() => window.location.href = "/CustomerCart"} />
                     </li>
-                    <li>
-                        <button className="login-btn" onClick={() => handleRouteToLogin("/login")}>
-                            {isAuthenticated ? (
-                                <span className="user-display">
-                                    <div className="user-initial">{userInitial}</div>
-                                    {userName}
-                                </span>
-                            ) : "Log in"}
-                        </button>
-                    </li>
-                    <li>
-                        {isAuthenticated && (
-                            <button className="login-out-btn" onClick={() => handleRouteToLogOut("/login")}>Log Out</button>
-                        )}
-                    </li>
+                    {isAuthenticated ? (
+                        < div style={{display: "flex", alignItems:"center"}}>
+                            <li className="essential">
+                                <button className="login-btn" onClick={handleLogOut}>
+                                    Log Out
+                                </button>
+                            </li>
+                            <li className="essential user-display">
+                                <div className="user-initial">{userInitial}</div>
+                                {userName}
+                            </li>
+                        </div>
+                    ) : (
+                        <li className="essential">
+                            <button className="login-btn" onClick={() => window.location.href = "/login"}>Log in</button>
+                        </li>
+                    )}
                 </ul>
             </div>
 
-            <div className="collapsible-menu" onClick={handleClick}>
-                <i className="fa fa-bars">&nbsp;&nbsp;</i>
+            <div className="menu-icon" onClick={handleClick}>
+                <i className="fa fa-bars"></i>
             </div>
-        </div>
+        </nav>
     );
 };
 

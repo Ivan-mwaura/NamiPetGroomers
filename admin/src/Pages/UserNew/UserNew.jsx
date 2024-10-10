@@ -5,6 +5,7 @@ import CustomButton from "../../Utils/CustomButton";
 import { useHistory } from "react-router-use-history";
 import axios from "axios"; // Import axios for API calls
 import { toast } from "react-toastify";
+import CircularProgress from "@mui/material/CircularProgress"; // Import the loading spinner component
 
 const UserNew = () => {
   const history = useHistory();
@@ -15,6 +16,7 @@ const UserNew = () => {
     role: "admin", // Default role is admin
   });
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false); // State to manage the loading state
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -27,6 +29,7 @@ const UserNew = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
+      setIsLoading(true); // Show the loading spinner
       try {
         await axios.post("http://localhost:5000/api/v1/adminSignUp", formData, {
           headers: {
@@ -38,6 +41,9 @@ const UserNew = () => {
         history.push("/users");
       } catch (error) {
         console.error("Error creating admin:", error);
+        toast.error("Error creating admin. Please try again.");
+      } finally {
+        setIsLoading(false); // Hide the loading spinner after the request is complete
       }
     }
   };
@@ -89,7 +95,15 @@ const UserNew = () => {
           </div>
         </div>
         <div className="BtnGroup DisplayFlex">
-          <CustomButton text="Submit" type="submit" customStyles={{ backgroundColor: "var(--green)" }} />
+          {isLoading ? ( // Display the loading spinner if the request is in progress
+            <CircularProgress />
+          ) : (
+            <CustomButton
+              text="Submit"
+              type="submit"
+              customStyles={{ backgroundColor: "var(--green)" }}
+            />
+          )}
         </div>
       </form>
     </div>

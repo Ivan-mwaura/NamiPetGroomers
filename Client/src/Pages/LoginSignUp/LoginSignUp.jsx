@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './LoginSignUp.scss';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -13,6 +13,18 @@ const LoginSignUp = () => {
     password: '',
     role: 'user', // Default role
   });
+
+  useEffect(() => {
+    if (localStorage.getItem('UserToken')) {
+
+      window.location.href = '/'; // Redirect to home page
+
+    } else if (localStorage.getItem('AdminToken')) {
+
+      window.location.href = '/admin'; // Redirect to admin page
+
+    }
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -183,15 +195,11 @@ const LoginSignUp = () => {
   
               <button type="submit">{isSignUp ? 'Sign Up' : 'Log In'}</button>
             </form>
-  
-            <div className="social-login">
-              <p>or sign up with</p>
-              <div className="social-buttons">
-                <button className="facebook-btn">Facebook</button>
-                <button className="google-btn">Google</button>
-                <button className="apple-btn">Apple</button>
-              </div>
+
+            <div className="explore-more">
+              <p>Want to learn more about us? Check out our <a href="/">Home page</a> page!</p>
             </div>
+  
           </div>
         </div>
   

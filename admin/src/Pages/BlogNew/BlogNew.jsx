@@ -5,10 +5,11 @@ import CustomButton from "../../Utils/CustomButton";
 import { useHistory } from "react-router-use-history";
 import axios from "axios";
 import { toast } from "react-toastify";
+import CircularProgress from "@mui/material/CircularProgress"; // Importing CircularProgress for the loading spinner
 
 const BlogNew = () => {
   const history = useHistory();
-
+  const [loading, setLoading] = useState(false); // State for loading indicator
   const [formData, setFormData] = useState({
     title: "",
     author: "",
@@ -42,21 +43,21 @@ const BlogNew = () => {
       }
 
       try {
-        await axios.post("http://localhost:5000/api/v1/blogs", formDataToSend, {
+        setLoading(true); // Set loading to true when the request starts
+        const res = await axios.post("http://localhost:5000/api/v1/blogs", formDataToSend, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        }).then((res) => {
-			if (res.status === 200) {
-				toast.success("Blog created successfully");
-				history.push("/blogs");
-			}
-		});
+        });
 
-        console.log("Blog created successfully", formDataToSend);
-        history.push("/blogs");
+        if (res.status === 200) {
+          toast.success("Blog created successfully");
+          history.push("/blogs");
+        }
       } catch (error) {
-        console.error("Error creating blog:", error);
+        toast.error(error.response?.data?.message || "Failed to create blog");
+      } finally {
+        setLoading(false); // Set loading to false when the request is finished
       }
     }
   };
@@ -103,40 +104,47 @@ const BlogNew = () => {
         <span>Blogs</span> <i className="fas fa-angle-right"></i>
         <span>Add</span>
       </div>
-      <form onSubmit={onSubmit} className="BlogNewContainer DisplayFlex">
-        <div className="EventsTop DisplayFlex">
-          <div className="EventImages DisplayFlex">
-            <div className="UploadBox DisplayFlex">
-              <input
-                type="file"
-                id="file"
-                name="file"
-                style={{ display: "none" }}
-                onChange={handleFileChange}
-              />
-              <label htmlFor="file" className="upload-label">
-                <i className="fa fa-cloud-upload-alt"></i>
-                <p>Click here or drop file to upload Image</p>
-              </label>
-              {blogImage && <p>{blogImage.name}</p>}
+      {loading ? ( // Display the loading indicator when the request is in progress
+        <div className="loading-indicator">
+          <CircularProgress />
+          <p>Updating, please wait...</p>
+        </div>
+      ) : (
+        <form onSubmit={onSubmit} className="BlogNewContainer DisplayFlex">
+          <div className="EventsTop DisplayFlex">
+            <div className="EventImages DisplayFlex">
+              <div className="UploadBox DisplayFlex">
+                <input
+                  type="file"
+                  id="file"
+                  name="file"
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                />
+                <label htmlFor="file" className="upload-label">
+                  <i className="fa fa-cloud-upload-alt"></i>
+                  <p>Click here or drop file to upload Image</p>
+                </label>
+                {blogImage && <p>{blogImage.name}</p>}
+              </div>
+            </div>
+            <div className="EventDetails DisplayFlex">
+              <h2>Blog Details</h2>
+              {renderCustomTextField("title", "Title", "e.g Blog Title")}
+              <div className="InputGroups DisplayFlex">
+                {renderCustomTextField("author", "Author", "e.g Author Name")}
+              </div>
+              <div className="InputGroups DisplayFlex">
+                {renderCustomTextField("datePosted", "Date Posted", "YYYY-MM-DD", "date")}
+              </div>
+              {renderCustomTextField("content", "Content", "Enter content here...", "text", true, 6)}
             </div>
           </div>
-          <div className="EventDetails DisplayFlex">
-            <h2>Blog Details</h2>
-            {renderCustomTextField("title", "Title", "e.g Blog Title")}
-            <div className="InputGroups DisplayFlex">
-              {renderCustomTextField("author", "Author", "e.g Author Name")}
-            </div>
-            <div className="InputGroups DisplayFlex">
-              {renderCustomTextField("datePosted", "Date Posted", "YYYY-MM-DD", "date")}
-            </div>
-            {renderCustomTextField("content", "Content", "Enter content here...", "text", true, 6)}
+          <div className="BtnGroup DisplayFlex">
+            <CustomButton text="Submit" type="submit" customStyles={{ backgroundColor: "var(--green)" }} />
           </div>
-        </div>
-        <div className="BtnGroup DisplayFlex">
-          <CustomButton text="Submit" type="submit" customStyles={{ backgroundColor: "var(--green)" }} />
-        </div>
-      </form>
+        </form>
+      )}
     </div>
   );
 };
