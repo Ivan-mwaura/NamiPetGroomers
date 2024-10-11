@@ -1,21 +1,22 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './', // Ensures that Vite generates relative paths for all assets
+  base: '/', // Ensures absolute paths for assets in production
   plugins: [react()],
   resolve: {
     alias: {
-      '@': '/src',
+      '@': '/src', // Allows importing files from src using '@/...' syntax
     },
   },
   build: {
-    outDir: 'dist', // Output directory for the build
+    outDir: 'dist', // Output directory for the build files
     assetsDir: 'assets', // Directory for the assets within the build output
     rollupOptions: {
       output: {
-        assetFileNames: '[name][extname]', // Prevents hashing of asset file names
+        assetFileNames: 'assets/[name]-[hash][extname]', // Uses hashed filenames to handle caching properly
+        
       },
     },
   },

@@ -59,7 +59,7 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../Client/dist', 'index.html'));
 });
 
-const port = process.env.PORT || 50003;
+const port = process.env.PORT || 5000;
 
 const start = async () => {
     try {
