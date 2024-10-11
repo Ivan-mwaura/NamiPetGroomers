@@ -57,7 +57,7 @@ const SubscriptionDetails = () => {
   const handleSubscribe = async () => {
 
     try {
-      await axios.post('http://localhost:5000/api/v1/sendSubscribeReply', {
+      await axios.post('/api/v1/sendSubscribeReply', {
         name: formData.name,
         phoneNumber: `254${formData.phoneNumber}`,
         email: formData.email,

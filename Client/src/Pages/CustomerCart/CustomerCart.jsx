@@ -21,7 +21,7 @@ const CustomerCart = () => {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/v1/getCartItems`, {
+        const response = await axios.get(`/api/v1/getCartItems`, {
           params: { userEmail }
         });
         setCartItems(response.data.cartItems);

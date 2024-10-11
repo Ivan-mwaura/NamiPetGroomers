@@ -130,12 +130,12 @@ const CustomTable = ({
     if (context === "users") {
       return role === "admin"
         ? {
-            delete: `http://localhost:5000/api/v1/deleteAdminLogin/`,
-            update: `http://localhost:5000/api/v1/updateAdminLogin/`,
+            delete: `/api/v1/deleteAdminLogin/`,
+            update: `/api/v1/updateAdminLogin/`,
           }
         : {
-            delete: `http://localhost:5000/api/v1/deleteLogin/`,
-            update: `http://localhost:5000/api/v1/updateLogin/`,
+            delete: `/api/v1/deleteLogin/`,
+            update: `/api/v1/updateLogin/`,
           };
     }
   
@@ -143,63 +143,68 @@ const CustomTable = ({
     switch (context) {
       case "subscribers":
         return {
-          update: `http://localhost:5000/api/v1/updateSubscriber/`,
-          delete: `http://localhost:5000/api/v1/deleteSubscriber/`,
+          update: `/api/v1/updateSubscriber/`,
+          delete: `/api/v1/deleteSubscriber/`,
         };
       case "messages":
         return {
-          delete: `http://localhost:5000/api/v1/deleteMessage/`,
+          delete: `/api/v1/deleteMessage/`,
         };
       case "contactUsInquiries":
         return {
-          delete: `http://localhost:5000/api/v1/deleteContactUsInquiry/`,
+          delete: `/api/v1/deleteContactUsInquiry/`,
         };
       case "blogs":
         return {
-          update: `http://localhost:5000/api/v1/updateBlog/`,
-          delete: `http://localhost:5000/api/v1/deleteBlog/`,
+          update: `/api/v1/updateBlog/`,
+          delete: `/api/v1/deleteBlog/`,
         };
       case "pricings":
         return {
-          update: `http://localhost:5000/api/v1/updatePricing/`,
-          delete: `http://localhost:5000/api/v1/deletePricing/`,
+          update: `/api/v1/updatePricing/`,
+          delete: `/api/v1/deletePricing/`,
         };
       case "services":
         return {
-          update: `http://localhost:5000/api/v1/updateService/`,
-          delete: `http://localhost:5000/api/v1/deleteService/`,
+          update: `/api/v1/updateService/`,
+          delete: `/api/v1/deleteService/`,
         };
       case "veterinarians":
         return {
-          update: `http://localhost:5000/api/v1/updateVeterinarian/`,
-          delete: `http://localhost:5000/api/v1/deleteVeterinarian/`,
+          update: `/api/v1/updateVeterinarian/`,
+          delete: `/api/v1/deleteVeterinarian/`,
+        };
+      case "animalGallery":
+        return {
+          update: `/api/v1/updateAnimalGrooming/`,
+          delete: `/api/v1/deleteAnimalGrooming/`,
         };
       case "products":
         switch (animalType) {
           case "Dog":
             return {
-              update: `http://localhost:5000/api/v1/updateDogProduct/`,
-              delete: `http://localhost:5000/api/v1/deleteDogProduct/`,
+              update: `/api/v1/updateDogProduct/`,
+              delete: `/api/v1/deleteDogProduct/`,
             };
           case "Cat":
             return {
-              update: `http://localhost:5000/api/v1/updateCatProduct/`,
-              delete: `http://localhost:5000/api/v1/deleteCatProduct/`,
+              update: `/api/v1/updateCatProduct/`,
+              delete: `/api/v1/deleteCatProduct/`,
             };
           case "Bird":
             return {
-              update: `http://localhost:5000/api/v1/updateBirdProduct/`,
-              delete: `http://localhost:5000/api/v1/deleteBirdProduct/`,
+              update: `/api/v1/updateBirdProduct/`,
+              delete: `/api/v1/deleteBirdProduct/`,
             };
           case "Horse":
             return {
-              update: `http://localhost:5000/api/v1/updateHorseProduct/`,
-              delete: `http://localhost:5000/api/v1/deleteHorseProduct/`,
+              update: `/api/v1/updateHorseProduct/`,
+              delete: `/api/v1/deleteHorseProduct/`,
             };
           case "FishAndAquaticPets":
             return {
-              update: `http://localhost:5000/api/v1/updateFishAndAquaticAnimalsProduct/`,
-              delete: `http://localhost:5000/api/v1/deleteFishAndAquaticAnimalsProduct/`,
+              update: `/api/v1/updateFishAndAquaticAnimalsProduct/`,
+              delete: `/api/v1/deleteFishAndAquaticAnimalsProduct/`,
             };
           default:
             return { update: "", delete: "" };

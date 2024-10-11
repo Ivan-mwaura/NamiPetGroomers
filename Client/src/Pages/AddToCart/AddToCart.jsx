@@ -53,7 +53,7 @@ const handleAddToCart = () => {
   console.log('cartGoods', updatedCartItems);
   console.log('userEmail', userEmail);
 
-  axios.post('http://localhost:5000/api/v1/storeCartItems', { userEmail,updatedCartItems })
+  axios.post('/api/v1/storeCartItems', { userEmail,updatedCartItems })
     .then((response) => {
       if (response.status === 200) {
         toast.success('Cart items stored successfully');

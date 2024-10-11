@@ -17,7 +17,7 @@ const Pricing = () => {
   useEffect(() => {
     const fetchPricingData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/v1/getPricings');
+        const response = await axios.get('/api/v1/getPricings');
         setPricingData(response.data.data);
       } catch (error) {
         console.error('Error fetching pricing data:', error);

@@ -21,22 +21,22 @@ const CategoryItems = () => {
       let url = '';
       switch (selectedAnimal) {
         case 'Dog':
-          url = 'http://localhost:5000/api/v1/getDogProducts';
+          url = '/api/v1/getDogProducts';
           break;
         case 'Cat':
-          url = 'http://localhost:5000/api/v1/getCatProducts';
+          url = '/api/v1/getCatProducts';
           break;
         case 'Birds':
-          url = 'http://localhost:5000/api/v1/getBirdProducts';
+          url = '/api/v1/getBirdProducts';
           break;
         case 'Horse':
-          url = 'http://localhost:5000/api/v1/getHorseProducts';
+          url = '/api/v1/getHorseProducts';
           break;
         case 'FishAndAquaticPets':
-          url = 'http://localhost:5000/api/v1/getFishAndAcquaticAnimalsProducts';
+          url = '/api/v1/getFishAndAcquaticAnimalsProducts';
           break;
         case 'SmallAnimals':
-          url = 'http://localhost:5000/api/v1/getSmallAnimalsProducts';
+          url = '/api/v1/getSmallAnimalsProducts';
           break;
         default:
           break;

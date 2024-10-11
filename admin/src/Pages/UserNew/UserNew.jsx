@@ -31,7 +31,7 @@ const UserNew = () => {
     if (Object.keys(newErrors).length === 0) {
       setIsLoading(true); // Show the loading spinner
       try {
-        await axios.post("http://localhost:5000/api/v1/adminSignUp", formData, {
+        await axios.post("/api/v1/adminSignUp", formData, {
           headers: {
             "Content-Type": "application/json",
           },

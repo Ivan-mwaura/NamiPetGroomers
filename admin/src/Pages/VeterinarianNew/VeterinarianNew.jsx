@@ -52,7 +52,7 @@ const VeterinarianNew = () => {
 
             try {
                 setLoading(true); // Set loading to true when the request starts
-                await axios.post("http://localhost:5000/api/v1/veterinarians", formDataToSend, {
+                await axios.post("/api/v1/veterinarians", formDataToSend, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },

@@ -28,11 +28,11 @@ const ProductNew = () => {
 	const [selectedSubCategory, setSelectedSubCategory] = useState("");
 
 	const endpointMapping = {
-		Dog: "http://localhost:5000/api/v1/dogProducts",
-		Cat: "http://localhost:5000/api/v1/catProducts",
-		Bird: "http://localhost:5000/api/v1/birdProducts",
-		Horse: "http://localhost:5000/api/v1/horseProducts",
-		FishAndAquaticPets: "http://localhost:5000/api/v1/fishAndAquaticPetsProducts"
+		Dog: "/api/v1/dogProducts",
+		Cat: "/api/v1/catProducts",
+		Bird: "/api/v1/birdProducts",
+		Horse: "/api/v1/horseProducts",
+		FishAndAquaticPets: "/api/v1/fishAndAquaticPetsProducts"
 	};
 
 	const onSubmit = async (event) => {

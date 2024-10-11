@@ -34,7 +34,7 @@ const PricingNew = () => {
     if (Object.keys(newErrors).length === 0) {
       try {
         setLoading(true); // Set loading to true when the request starts
-        await axios.post("http://localhost:5000/api/v1/pricing", formData);
+        await axios.post("/api/v1/pricing", formData);
         toast.success("Pricing created successfully");
         history.push("/admin/pricings");
       } catch (error) {

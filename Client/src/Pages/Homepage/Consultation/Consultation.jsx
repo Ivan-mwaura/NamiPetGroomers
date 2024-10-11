@@ -19,7 +19,7 @@ const Consultation = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/v1/getServices'); // Adjust the endpoint URL as needed
+        const response = await axios.get('/api/v1/getServices'); // Adjust the endpoint URL as needed
         setServices(response.data.data);
       } catch (error) {
         console.error('Error fetching services:', error);

@@ -38,7 +38,7 @@ const ServiceNew = () => {
           servicePrice: formData.price,
         };
         console.log("Submitting service data:", serviceData); // Debugging statement
-        await axios.post("http://localhost:5000/api/v1/services", serviceData);
+        await axios.post("/api/v1/services", serviceData);
         toast.success("Service created successfully");
         history.push("/admin/Services");
       } catch (error) {

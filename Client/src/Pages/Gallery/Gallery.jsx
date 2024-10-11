@@ -19,7 +19,7 @@ const Gallery = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/v1/getAnimalGroomings');
+        const response = await axios.get('/api/v1/getAnimalGroomings');
         const fetchedImages = response.data.data.map(item => ({
           id: item._id,
           before: item.groomingImages.before,

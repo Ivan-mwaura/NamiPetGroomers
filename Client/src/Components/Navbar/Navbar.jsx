@@ -24,6 +24,12 @@ const Navbar = () => {
         }
     }, []);
 
+    const handleLogin = () => {
+        localStorage.clear();
+        window.location.href = "/login";
+
+    };
+
     const handleLogOut = () => {
         localStorage.clear();
         setIsAuthenticated(false);
@@ -71,7 +77,7 @@ const Navbar = () => {
                         </div>
                     ) : (
                         <li className="essential">
-                            <button className="login-btn" onClick={() => window.location.href = "/login"}>Log in</button>
+                            <button className="login-btn" onClick={handleLogin}>Log in</button>
                         </li>
                     )}
                 </ul>

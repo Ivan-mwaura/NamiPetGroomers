@@ -24,7 +24,7 @@ const ContactUs = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/api/v1/contactUsInquiries', formData);
+      const response = await axios.post('/api/v1/contactUsInquiries', formData);
       if (response.status === 200) {
         setIsSubmitted(true);
         setErrorMessage('');

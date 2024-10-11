@@ -15,7 +15,7 @@ const Services = () => {
     useEffect(() => {
         const fetchServices = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/v1/getServices'); // Adjust the endpoint URL as needed
+                const response = await axios.get('/api/v1/getServices'); // Adjust the endpoint URL as needed
                 const services = response.data.data.map((service, index) => ({
                     id: service._id,
                     icon: [service1, service2, service3][index % 3], // Cycle through the icons
