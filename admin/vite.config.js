@@ -9,15 +9,14 @@ export default defineConfig({
     include: ["styled-components", "@mui/material"],
   },
   build: {
-    outDir: 'dist', // Explicitly set the output directory
+    outDir: 'dist', // Output directory for the build files
+    assetsDir: 'assets', // Directory for the assets within the build output
     rollupOptions: {
       output: {
-        // Ensures correct paths are set for assets
-        entryFileNames: 'assets/[name].js',
-        chunkFileNames: 'assets/[name].js',
-        assetFileNames: 'assets/[name].[ext]'
-      }
-    }
-  }
+        assetFileNames: 'assets/[name]-[hash][extname]', // Uses hashed filenames to handle caching properly
+        
+      },
+    },
+  },
 
 });
