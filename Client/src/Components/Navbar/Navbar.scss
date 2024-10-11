@@ -48,13 +48,13 @@
             list-style: none;
             gap: 10px;
             font-size: 15px;
-            font-weight: 650;
+            font-weight: 640;
 
             li {
                 padding: 10px 10px;
                 cursor: pointer;
                 &:hover {
-                    color: #007BFF;
+                    color: var(--green);
                 }
             }
 

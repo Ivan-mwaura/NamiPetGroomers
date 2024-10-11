@@ -38,7 +38,7 @@ const Cart = () => {
   };
 
   const handleContinueShopping = () => {
-    window.location.href = '/Petshop/PetCategorySection';
+    window.location.href = '/petCategorySection';
   };
 
   const handleCheckout = () => {

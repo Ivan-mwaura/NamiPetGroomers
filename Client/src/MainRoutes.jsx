@@ -7,6 +7,7 @@ import Footer from "./Components/Footer/Footer";
 import Cart from "./Pages/Cart/Cart";
 import PublicRoute from "./Components/PublicRoute";
 import ProtectedRoute from "./Components/ProtectedRuote";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Homepage = lazy(() => import("./Pages/Homepage/Homepage"));
 const PetCategorySection = lazy(() => import("./Pages/Homepage/Petshop/PetCategorySection/PetCategorySection"));
