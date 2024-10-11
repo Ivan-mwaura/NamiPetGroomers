@@ -44,9 +44,9 @@ const LoginSignUp = () => {
     e.preventDefault();
     
     try {
-      let endpoint = isSignUp ? 'http://localhost:5000/api/v1/signUp' : 'http://localhost:5000/api/v1/login';
+      let endpoint = isSignUp ? 'http://localhost:5003/api/v1/signUp' : 'http://localhost:5003/api/v1/login';
       if (formData.role === 'admin') {
-        endpoint = 'http://localhost:5000/api/v1/adminLogin'; // Send to /admin/signUp or /admin/login
+        endpoint = 'http://localhost:5003/api/v1/adminLogin'; // Send to /admin/signUp or /admin/login
       }
 
       const data = {
